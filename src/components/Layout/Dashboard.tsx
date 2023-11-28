@@ -26,7 +26,9 @@ function Dashboard() {
   const data = useAppSelector((state) => state.data);
   const filter = useAppSelector((state) => state.filter);
 
-  const handleNeighborhoodChange = (selectedNeighborhood: SingleValue<Neigborhood>) => {
+  const handleNeighborhoodChange = (
+    selectedNeighborhood: SingleValue<Neigborhood>,
+  ) => {
     if (selectedNeighborhood) {
       dispatch(setNeighborhood(selectedNeighborhood));
     }

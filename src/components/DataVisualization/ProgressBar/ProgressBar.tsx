@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { FatalityTotals } from "../../../types";
 import Bar from "./Bar";
 import BarLegend from "./BarLegend";
-import modeColorMap from "./consts";
+import getBarCategories from "./utills";
 
 interface Props {
   currentYear: FatalityTotals;
@@ -29,87 +29,8 @@ function ProgressBar(props: Props) {
     currentYearWidth = (currentYear.total / previousYearToDate.total) * 100;
   }
 
-  const categoriesCurrent = [
-    ...(currentYear.pedestrian
-      ? [
-        {
-          mode: "Pedestrian",
-          color: modeColorMap.get("pedestrian"),
-          widthPercentage: currentYear.pedestrian / currentYear.total,
-        },
-      ]
-      : []),
-    ...(currentYear.cyclist
-      ? [
-        {
-          mode: "Cyclist",
-          color: modeColorMap.get("cyclist"),
-          widthPercentage: currentYear.cyclist / currentYear.total,
-        },
-      ]
-      : []),
-    ...(currentYear.motorcyclist
-      ? [
-        {
-          mode: "Motorcyclist",
-          color: modeColorMap.get("motorcyclist"),
-          widthPercentage: currentYear.motorcyclist / currentYear.total,
-        },
-      ]
-      : []),
-    ...(currentYear.motorist
-      ? [
-        {
-          mode: "Motorist",
-          color: modeColorMap.get("motorist"),
-          widthPercentage: currentYear.motorist / currentYear.total,
-        },
-      ]
-      : []),
-  ];
-
-  const categoriesPrevious = [
-    ...(previousYearToDate.pedestrian
-      ? [
-        {
-          mode: "Pedestrian",
-          color: modeColorMap.get("pedestrian"),
-          widthPercentage:
-            previousYearToDate.pedestrian / previousYearToDate.total,
-        },
-      ]
-      : []),
-    ...(previousYearToDate.cyclist
-      ? [
-        {
-          mode: "Cyclist",
-          color: modeColorMap.get("cyclist"),
-          widthPercentage:
-            previousYearToDate.cyclist / previousYearToDate.total,
-        },
-      ]
-      : []),
-    ...(previousYearToDate.motorcyclist
-      ? [
-        {
-          mode: "Motorcyclist",
-          color: modeColorMap.get("motorcyclist"),
-          widthPercentage:
-            previousYearToDate.motorcyclist / previousYearToDate.total,
-        },
-      ]
-      : []),
-    ...(previousYearToDate.motorist
-      ? [
-        {
-          mode: "Motorist",
-          color: modeColorMap.get("motorist"),
-          widthPercentage:
-            previousYearToDate.motorist / previousYearToDate.total,
-        },
-      ]
-      : []),
-  ];
+  const categoriesCurrent = getBarCategories(currentYear);
+  const categoriesPrevious = getBarCategories(previousYearToDate);
 
   return (
     <Box>

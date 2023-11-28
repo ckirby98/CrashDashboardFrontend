@@ -38,7 +38,8 @@ function CrashBarChart() {
     );
 
     const crashesByYear: ChartYear[] = [];
-    for (const [key, value] of crashTypeTotalsByYear) {
+
+    crashTypeTotalsByYear.forEach((value, key) => {
       const total = Object.values(value).reduce((acc, val) => acc + val, 0);
       crashesByYear.push({
         name: key.toString(),
@@ -52,7 +53,7 @@ function CrashBarChart() {
         motorist_injury_count: value.get("motorist_injury_count"),
         total,
       });
-    }
+    });
     return crashesByYear;
   }, [data, filter]);
 
