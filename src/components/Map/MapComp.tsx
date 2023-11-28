@@ -80,7 +80,7 @@ function MapComp() {
 
   const centerMap = useCallback(() => {
     view.goTo(neighborhoodsGeoJson.fullExtent);
-  }, [view])
+  }, [view]);
 
   /**
    * Create map and load crash data
