@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
 import { FatalityTotals } from "../../../types";
-import { modeColorMap } from "./consts";
+import modeColorMap from "./consts";
 
 interface Props {
   totals: FatalityTotals;

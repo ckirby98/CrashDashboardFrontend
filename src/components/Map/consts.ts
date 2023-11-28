@@ -1,7 +1,4 @@
 import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer";
-import AggregateField from "@arcgis/core/layers/support/AggregateField";
-import FeatureReductionCluster from "@arcgis/core/layers/support/FeatureReductionCluster";
-import ClassBreaksRenderer from "@arcgis/core/renderers/ClassBreaksRenderer";
 import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
 import UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
@@ -136,132 +133,132 @@ export const neighborhoodsGeoJson: GeoJSONLayer = new GeoJSONLayer({
   popupTemplate: template,
 });
 
-const less10 = {
-  type: "simple-marker",
-  color: "#f0ff00",
-  outline: {
-    color: "rgba(153, 31, 23, 0.3)",
-    width: 0.3,
-  },
-};
+// const less10 = {
+//   type: "simple-marker",
+//   color: "#f0ff00",
+//   outline: {
+//     color: "rgba(153, 31, 23, 0.3)",
+//     width: 0.3,
+//   },
+// };
 
-const less25 = {
-  type: "simple-marker",
-  color: "#ffce00",
-  outline: {
-    color: "rgba(153, 31, 23, 0.3)",
-    width: 0.3,
-  },
-};
+// const less25 = {
+//   type: "simple-marker",
+//   color: "#ffce00",
+//   outline: {
+//     color: "rgba(153, 31, 23, 0.3)",
+//     width: 0.3,
+//   },
+// };
 
-const more25 = {
-  type: "simple-marker",
-  color: "#ff9a00",
-  outline: {
-    color: "rgba(153, 31, 23, 0.3)",
-    width: 0.3,
-  },
-};
+// const more25 = {
+//   type: "simple-marker",
+//   color: "#ff9a00",
+//   outline: {
+//     color: "rgba(153, 31, 23, 0.3)",
+//     width: 0.3,
+//   },
+// };
 
-const more50 = {
-  type: "simple-marker",
-  color: "#ff5a00",
-  outline: {
-    color: "rgba(153, 31, 23, 0.3)",
-    width: 0.3,
-  },
-};
+// const more50 = {
+//   type: "simple-marker",
+//   color: "#ff5a00",
+//   outline: {
+//     color: "rgba(153, 31, 23, 0.3)",
+//     width: 0.3,
+//   },
+// };
 
-const more100 = {
-  type: "simple-marker",
-  color: "#ff0000",
-  outline: {
-    color: "rgba(153, 31, 23, 0.3)",
-    width: 0.3,
-  },
-};
+// const more100 = {
+//   type: "simple-marker",
+//   color: "#ff0000",
+//   outline: {
+//     color: "rgba(153, 31, 23, 0.3)",
+//     width: 0.3,
+//   },
+// };
 
-const classBreaksRenderer = new ClassBreaksRenderer({
-  field: "cluster_count", // total number of adults (25+) with a college degree
-  defaultLabel: "no data", // legend label for features that don't match a class break
-  classBreakInfos: [
-    {
-      minValue: 1,
-      maxValue: 9,
-      symbol: less10,
-      label: "< 10", // label for symbol in legend
-    },
-    {
-      minValue: 10,
-      maxValue: 24,
-      symbol: less25,
-      label: "11 - 24", // label for symbol in legend
-    },
-    {
-      minValue: 25,
-      maxValue: 49,
-      symbol: more25,
-      label: "25 - 49", // label for symbol in legend
-    },
-    {
-      minValue: 50,
-      maxValue: 99,
-      symbol: more50,
-      label: "50 - 99", // label for symbol in legend
-    },
-    {
-      minValue: 100,
-      maxValue: 100000,
-      symbol: more100,
-      label: "100+", // label for symbol in legend
-    },
-  ],
-});
+// const classBreaksRenderer = new ClassBreaksRenderer({
+//   field: "cluster_count", // total number of adults (25+) with a college degree
+//   defaultLabel: "no data", // legend label for features that don't match a class break
+//   classBreakInfos: [
+//     {
+//       minValue: 1,
+//       maxValue: 9,
+//       symbol: less10,
+//       label: "< 10", // label for symbol in legend
+//     },
+//     {
+//       minValue: 10,
+//       maxValue: 24,
+//       symbol: less25,
+//       label: "11 - 24", // label for symbol in legend
+//     },
+//     {
+//       minValue: 25,
+//       maxValue: 49,
+//       symbol: more25,
+//       label: "25 - 49", // label for symbol in legend
+//     },
+//     {
+//       minValue: 50,
+//       maxValue: 99,
+//       symbol: more50,
+//       label: "50 - 99", // label for symbol in legend
+//     },
+//     {
+//       minValue: 100,
+//       maxValue: 100000,
+//       symbol: more100,
+//       label: "100+", // label for symbol in legend
+//     },
+//   ],
+// });
 
-const clusterConfig = new FeatureReductionCluster({
-  fields: [
-    new AggregateField({
-      name: "SUM_INCIDENTS",
-      onStatisticField: "total_incidents", // layer field
-      statisticType: "sum",
-    }),
-  ],
-  clusterRadius: "80px",
-  popupTemplate: {
-    title: "Cluster summary",
-    content: "This cluster represents {cluster_count} earthquakes.",
-    fieldInfos: [
-      {
-        fieldName: "cluster_count",
-        format: {
-          places: 0,
-          digitSeparator: true,
-        },
-      },
-    ],
-  },
-  clusterMinSize: "24px",
-  clusterMaxSize: "60px",
-  renderer: classBreaksRenderer,
-  labelingInfo: [
-    {
-      deconflictionStrategy: "none",
-      labelExpressionInfo: {
-        expression: "Text($feature.cluster_count, '#,###')",
-      },
-      symbol: {
-        type: "text",
-        color: "#004a5d",
-        font: {
-          weight: "bold",
-          family: "Noto Sans",
-          size: "12px",
-        },
-      },
-      labelPlacement: "center-center",
-    },
-  ],
-});
+// const clusterConfig = new FeatureReductionCluster({
+//   fields: [
+//     new AggregateField({
+//       name: "SUM_INCIDENTS",
+//       onStatisticField: "total_incidents", // layer field
+//       statisticType: "sum",
+//     }),
+//   ],
+//   clusterRadius: "80px",
+//   popupTemplate: {
+//     title: "Cluster summary",
+//     content: "This cluster represents {cluster_count} earthquakes.",
+//     fieldInfos: [
+//       {
+//         fieldName: "cluster_count",
+//         format: {
+//           places: 0,
+//           digitSeparator: true,
+//         },
+//       },
+//     ],
+//   },
+//   clusterMinSize: "24px",
+//   clusterMaxSize: "60px",
+//   renderer: classBreaksRenderer,
+//   labelingInfo: [
+//     {
+//       deconflictionStrategy: "none",
+//       labelExpressionInfo: {
+//         expression: "Text($feature.cluster_count, '#,###')",
+//       },
+//       symbol: {
+//         type: "text",
+//         color: "#004a5d",
+//         font: {
+//           weight: "bold",
+//           family: "Noto Sans",
+//           size: "12px",
+//         },
+//       },
+//       labelPlacement: "center-center",
+//     },
+//   ],
+// });
 
 export const uniqueValueRenderer = new UniqueValueRenderer({
   // field: "mode",

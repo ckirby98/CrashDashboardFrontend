@@ -7,7 +7,7 @@ import {
   EMPTY_NEIGHBORHOOD,
   NEIGHBORHOOD_OPTIONS,
 } from "../../consts";
-import { useAppDispatch, useAppSelector, useScreenSize } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { loadOpenDataPhilly, loadPenndot } from "../../thunks/dataThunks";
 import MapView from "../Map/MapComp";
 import Sidebar from "./Sidebar";
@@ -26,11 +26,9 @@ function Dashboard() {
   const data = useAppSelector((state) => state.data);
   const filter = useAppSelector((state) => state.filter);
 
-  const screenSize = useScreenSize();
-
-  const handleNeighborhoodChange = (neighborhood: SingleValue<Neigborhood>) => {
-    if (neighborhood) {
-      dispatch(setNeighborhood(neighborhood));
+  const handleNeighborhoodChange = (selectedNeighborhood: SingleValue<Neigborhood>) => {
+    if (selectedNeighborhood) {
+      dispatch(setNeighborhood(selectedNeighborhood));
     }
   };
 

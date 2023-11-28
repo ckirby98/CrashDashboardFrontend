@@ -7,15 +7,8 @@ import {
   setPenndotCrashes,
   setPreviousYearToDateFatalityTotals,
 } from "../slices/dataSlice";
-import { Crash, FatalityTotals } from "../types";
+import { Crash } from "../types";
 
-const emptyTotals = {
-  pedestrian: 0,
-  cyclist: 0,
-  motorcyclist: 0,
-  motorist: 0,
-  total: 0,
-};
 function getYearCrashTotals(targetDate: Date, crashes: Crash[]) {
   const totals = {
     pedestrian: 0,

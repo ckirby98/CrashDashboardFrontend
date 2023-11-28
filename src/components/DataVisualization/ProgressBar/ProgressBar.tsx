@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { FatalityTotals } from "../../../types";
 import Bar from "./Bar";
 import BarLegend from "./BarLegend";
-import { modeColorMap } from "./consts";
+import modeColorMap from "./consts";
 
 interface Props {
   currentYear: FatalityTotals;
@@ -32,82 +32,82 @@ function ProgressBar(props: Props) {
   const categoriesCurrent = [
     ...(currentYear.pedestrian
       ? [
-          {
-            mode: "Pedestrian",
-            color: modeColorMap.get("pedestrian"),
-            widthPercentage: currentYear.pedestrian / currentYear.total,
-          },
-        ]
+        {
+          mode: "Pedestrian",
+          color: modeColorMap.get("pedestrian"),
+          widthPercentage: currentYear.pedestrian / currentYear.total,
+        },
+      ]
       : []),
     ...(currentYear.cyclist
       ? [
-          {
-            mode: "Cyclist",
-            color: modeColorMap.get("cyclist"),
-            widthPercentage: currentYear.cyclist / currentYear.total,
-          },
-        ]
+        {
+          mode: "Cyclist",
+          color: modeColorMap.get("cyclist"),
+          widthPercentage: currentYear.cyclist / currentYear.total,
+        },
+      ]
       : []),
     ...(currentYear.motorcyclist
       ? [
-          {
-            mode: "Motorcyclist",
-            color: modeColorMap.get("motorcyclist"),
-            widthPercentage: currentYear.motorcyclist / currentYear.total,
-          },
-        ]
+        {
+          mode: "Motorcyclist",
+          color: modeColorMap.get("motorcyclist"),
+          widthPercentage: currentYear.motorcyclist / currentYear.total,
+        },
+      ]
       : []),
     ...(currentYear.motorist
       ? [
-          {
-            mode: "Motorist",
-            color: modeColorMap.get("motorist"),
-            widthPercentage: currentYear.motorist / currentYear.total,
-          },
-        ]
+        {
+          mode: "Motorist",
+          color: modeColorMap.get("motorist"),
+          widthPercentage: currentYear.motorist / currentYear.total,
+        },
+      ]
       : []),
   ];
 
   const categoriesPrevious = [
     ...(previousYearToDate.pedestrian
       ? [
-          {
-            mode: "Pedestrian",
-            color: modeColorMap.get("pedestrian"),
-            widthPercentage:
-              previousYearToDate.pedestrian / previousYearToDate.total,
-          },
-        ]
+        {
+          mode: "Pedestrian",
+          color: modeColorMap.get("pedestrian"),
+          widthPercentage:
+            previousYearToDate.pedestrian / previousYearToDate.total,
+        },
+      ]
       : []),
     ...(previousYearToDate.cyclist
       ? [
-          {
-            mode: "Cyclist",
-            color: modeColorMap.get("cyclist"),
-            widthPercentage:
-              previousYearToDate.cyclist / previousYearToDate.total,
-          },
-        ]
+        {
+          mode: "Cyclist",
+          color: modeColorMap.get("cyclist"),
+          widthPercentage:
+            previousYearToDate.cyclist / previousYearToDate.total,
+        },
+      ]
       : []),
     ...(previousYearToDate.motorcyclist
       ? [
-          {
-            mode: "Motorcyclist",
-            color: modeColorMap.get("motorcyclist"),
-            widthPercentage:
-              previousYearToDate.motorcyclist / previousYearToDate.total,
-          },
-        ]
+        {
+          mode: "Motorcyclist",
+          color: modeColorMap.get("motorcyclist"),
+          widthPercentage:
+            previousYearToDate.motorcyclist / previousYearToDate.total,
+        },
+      ]
       : []),
     ...(previousYearToDate.motorist
       ? [
-          {
-            mode: "Motorist",
-            color: modeColorMap.get("motorist"),
-            widthPercentage:
-              previousYearToDate.motorist / previousYearToDate.total,
-          },
-        ]
+        {
+          mode: "Motorist",
+          color: modeColorMap.get("motorist"),
+          widthPercentage:
+            previousYearToDate.motorist / previousYearToDate.total,
+        },
+      ]
       : []),
   ];
 

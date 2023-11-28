@@ -1,4 +1,3 @@
-import Graphic from "@arcgis/core/Graphic";
 import Map from "@arcgis/core/Map";
 import FeatureEffect from "@arcgis/core/layers/support/FeatureEffect";
 import FeatureFilter from "@arcgis/core/layers/support/FeatureFilter";
@@ -37,44 +36,44 @@ function MapComp() {
       });
   };
 
-  function changeCursor(response: __esri.HitTestResult) {
-    if (response.results.length > 1) {
-      mapRef.current.style.cursor = "pointer";
-    } else {
-      mapRef.current.style.cursor = "default";
-    }
-  }
+  // function changeCursor(response: __esri.HitTestResult) {
+  //   if (response.results.length > 1) {
+  //     mapRef.current.style.cursor = "pointer";
+  //   } else {
+  //     mapRef.current.style.cursor = "default";
+  //   }
+  // }
 
-  function getGraphics(response: __esri.HitTestResult) {
-    view.graphics.removeAll();
-    let type = "";
-    let hoveredGraphic: Graphic = new Graphic();
+  // function getGraphics(response: __esri.HitTestResult) {
+  //   view.graphics.removeAll();
+  //   let type = "";
+  //   let hoveredGraphic: Graphic = new Graphic();
 
-    for (const result of response.results) {
-      if (result.type === "graphic") {
-        const { graphic } = result;
-        if (!graphic.attributes.layerId) {
-          if (graphic.attributes.id) {
-            type = "Crash";
-            hoveredGraphic = graphic;
-            break;
-          }
-          if (graphic.attributes.__OBJECTID) {
-            hoveredGraphic = graphic;
-            type = "Neighborhood";
-          }
-        }
-      }
-    }
-    if (type === "Neighborhood") {
-      view.graphics.remove(hoveredGraphic);
-      view.graphics.add(hoveredGraphic);
-    }
-    if (type === "Crash") {
-      view.graphics.remove(hoveredGraphic);
-      view.graphics.add(hoveredGraphic);
-    }
-  }
+  //   for (const result of response.results) {
+  //     if (result.type === "graphic") {
+  //       const { graphic } = result;
+  //       if (!graphic.attributes.layerId) {
+  //         if (graphic.attributes.id) {
+  //           type = "Crash";
+  //           hoveredGraphic = graphic;
+  //           break;
+  //         }
+  //         if (graphic.attributes.__OBJECTID) {
+  //           hoveredGraphic = graphic;
+  //           type = "Neighborhood";
+  //         }
+  //       }
+  //     }
+  //   }
+  //   if (type === "Neighborhood") {
+  //     view.graphics.remove(hoveredGraphic);
+  //     view.graphics.add(hoveredGraphic);
+  //   }
+  //   if (type === "Crash") {
+  //     view.graphics.remove(hoveredGraphic);
+  //     view.graphics.add(hoveredGraphic);
+  //   }
+  // }
 
   function centerMap() {
     view.goTo(neighborhoodsGeoJson.fullExtent);
