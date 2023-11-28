@@ -11,15 +11,14 @@ interface DataState {
   neighborhoodDictionary: NeighborhoodDictionary;
 }
 
-
 const initialState: DataState = {
   openDataPhillyCrashes: [],
   penndotCrashes: [],
   currentYearFatalityTotals: {
-    total: 0
+    total: 0,
   },
   previousYearToDateFatalityTotals: {
-    total: 0
+    total: 0,
   },
   openDataPhillyLoaded: false,
   penndotLoaded: false,
@@ -44,13 +43,19 @@ export const dataSlice = createSlice({
         penndotLoaded: true,
       };
     },
-    setCurrentYearFatalityTotals: (state, action: PayloadAction<FatalityTotals>) => {
+    setCurrentYearFatalityTotals: (
+      state,
+      action: PayloadAction<FatalityTotals>,
+    ) => {
       return {
         ...state,
         currentYearFatalityTotals: action.payload,
       };
     },
-    setPreviousYearToDateFatalityTotals: (state, action: PayloadAction<FatalityTotals>) => {
+    setPreviousYearToDateFatalityTotals: (
+      state,
+      action: PayloadAction<FatalityTotals>,
+    ) => {
       return {
         ...state,
         previousYearToDateFatalityTotals: action.payload,
@@ -74,7 +79,7 @@ export const {
   setPenndotCrashes,
   setNeighborhoodDictionary,
   setCurrentYearFatalityTotals,
-  setPreviousYearToDateFatalityTotals
+  setPreviousYearToDateFatalityTotals,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

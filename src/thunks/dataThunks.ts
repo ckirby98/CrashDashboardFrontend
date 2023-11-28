@@ -9,7 +9,7 @@ import {
 } from "../slices/dataSlice";
 import { Crash, FatalityTotals } from "../types";
 
-let emptyTotals = {
+const emptyTotals = {
   pedestrian: 0,
   cyclist: 0,
   motorcyclist: 0,
@@ -25,11 +25,11 @@ function getYearCrashTotals(targetDate: Date, crashes: Crash[]) {
     total: 0,
   };
 
-  targetDate.setHours(0, 0, 0, 0)
+  targetDate.setHours(0, 0, 0, 0);
 
   crashes.forEach((crash) => {
     const crashDate = new Date(crash.date);
-    crashDate.setHours(0, 0, 0, 0)
+    crashDate.setHours(0, 0, 0, 0);
 
     if (crash.year !== targetDate.getFullYear()) {
       return;
@@ -64,9 +64,13 @@ function getYearCrashTotals(targetDate: Date, crashes: Crash[]) {
 
 export const loadOpenDataPhilly =
   (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
-    const targetDate = new Date()
-    targetDate.setDate(1)
-    const crashes = await getCrashes("opendataphilly", "2019", targetDate.getFullYear().toString());
+    const targetDate = new Date();
+    targetDate.setDate(1);
+    const crashes = await getCrashes(
+      "opendataphilly",
+      "2019",
+      targetDate.getFullYear().toString(),
+    );
     const totals = getYearCrashTotals(targetDate, crashes);
     dispatch(setCurrentYearFatalityTotals(totals));
     dispatch(setOpenDataPhillyCrashes(crashes));
@@ -75,13 +79,10 @@ export const loadOpenDataPhilly =
 export const loadPenndot =
   (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
     const crashes = await getCrashes("penndot", "2002", "2022");
-    const targetDate = new Date()
-    targetDate.setFullYear(targetDate.getFullYear() - 1)
-    targetDate.setDate(1)
-    const totals = getYearCrashTotals(
-      targetDate,
-      crashes,
-    );
+    const targetDate = new Date();
+    targetDate.setFullYear(targetDate.getFullYear() - 1);
+    targetDate.setDate(1);
+    const totals = getYearCrashTotals(targetDate, crashes);
     dispatch(setPreviousYearToDateFatalityTotals(totals));
     dispatch(setPenndotCrashes(crashes));
   };

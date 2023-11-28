@@ -10,10 +10,7 @@ interface Props {
 function BarLegend(props: Props) {
   const { totals, previousYearToDateTotals } = props;
   return (
-    <Box
-      marginBottom={6}
-      marginLeft={16}
-    >
+    <Box marginBottom={6} marginLeft={16}>
       <Grid gridTemplateColumns="repeat(4, 1fr)">
         {Object.entries(totals)
           .slice(0, -1)
@@ -32,7 +29,7 @@ function BarLegend(props: Props) {
                   <Text>{total}</Text>
                   {previousYearToDateTotals && (
                     <Text color={difference > 0 ? "red" : "green"}>
-                      &nbsp;{`(${difference > 0 ? '+' : ''}${difference})`}
+                      &nbsp;{`(${difference > 0 ? "+" : ""}${difference})`}
                     </Text>
                   )}
                 </Box>

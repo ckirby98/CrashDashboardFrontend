@@ -8,7 +8,7 @@ import {
   Select,
   Stack,
   Text,
-  Image
+  Image,
 } from "@chakra-ui/react";
 import React, { ChangeEvent, useEffect } from "react";
 import { SIDEBAR_WIDTH } from "../../consts";
@@ -93,7 +93,10 @@ function Sidebar() {
   return (
     <Box w={SIDEBAR_WIDTH} h="100%" boxShadow="md" p="6" rounded="md">
       <Stack spacing={3} p={5}>
-        <Heading as='h1' fontSize='26px'> Philadelphia Crash Dashboard </Heading>
+        <Heading as="h1" fontSize="26px">
+          {" "}
+          Philadelphia Crash Dashboard{" "}
+        </Heading>
       </Stack>
       <FormControl paddingX={5} paddingBottom={2}>
         <FormLabel fontSize="sm">Dataset</FormLabel>
@@ -139,7 +142,10 @@ function Sidebar() {
           >
             Fatalities
           </Checkbox>
-          <Image src={process.env.PUBLIC_URL + 'red_circle.png'} boxSize='24px' />
+          <Image
+            src={`${process.env.PUBLIC_URL}red_circle.png`}
+            boxSize="24px"
+          />
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Checkbox
@@ -149,7 +155,10 @@ function Sidebar() {
           >
             Serious Injuries
           </Checkbox>
-          <Image src={process.env.PUBLIC_URL + 'orange_circle.png'} boxSize='24px' />
+          <Image
+            src={`${process.env.PUBLIC_URL}orange_circle.png`}
+            boxSize="24px"
+          />
         </Box>
       </Stack>
       <Stack spacing={3} p={5}>
@@ -166,7 +175,10 @@ function Sidebar() {
           >
             Pedestrians
           </Checkbox>
-          <Image src={process.env.PUBLIC_URL + 'pedestrian_grey.png'} boxSize='24px' />
+          <Image
+            src={`${process.env.PUBLIC_URL}pedestrian_grey.png`}
+            boxSize="24px"
+          />
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Checkbox
@@ -178,10 +190,12 @@ function Sidebar() {
           >
             Cyclists
           </Checkbox>
-          <Image src={process.env.PUBLIC_URL + 'cyclist_grey.png'} boxSize='24px' />
+          <Image
+            src={`${process.env.PUBLIC_URL}cyclist_grey.png`}
+            boxSize="24px"
+          />
         </Box>
         <Box display="flex" justifyContent="space-between">
-
           <Checkbox
             disabled={
               !filter.pedestrians && !filter.motorists && !filter.cyclists
@@ -191,7 +205,10 @@ function Sidebar() {
           >
             Motorcyclists
           </Checkbox>
-          <Image src={process.env.PUBLIC_URL + 'motorcyclist_grey.png'} boxSize='24px' />
+          <Image
+            src={`${process.env.PUBLIC_URL}motorcyclist_grey.png`}
+            boxSize="24px"
+          />
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Checkbox
@@ -203,7 +220,10 @@ function Sidebar() {
           >
             Motorists
           </Checkbox>
-          <Image src={process.env.PUBLIC_URL + 'motorist_grey.png'} boxSize='24px' />
+          <Image
+            src={`${process.env.PUBLIC_URL}motorist_grey.png`}
+            boxSize="24px"
+          />
         </Box>
       </Stack>
     </Box>

@@ -9,11 +9,11 @@ interface Props {
   previousYearToDate: FatalityTotals;
 }
 
-const lastMonth = new Date()
-lastMonth.setDate(1)
-lastMonth.setHours(-1)
+const lastMonth = new Date();
+lastMonth.setDate(1);
+lastMonth.setHours(-1);
 
-const month = lastMonth.toLocaleString('default', { month: 'long' });
+const month = lastMonth.toLocaleString("default", { month: "long" });
 
 function ProgressBar(props: Props) {
   const { currentYear, previousYearToDate } = props;
@@ -111,7 +111,6 @@ function ProgressBar(props: Props) {
       : []),
   ];
 
-
   return (
     <Box>
       <Box marginBottom={6} display="flex" justifyContent="space-between">
@@ -122,7 +121,6 @@ function ProgressBar(props: Props) {
           {`January 1 - ${month} ${lastMonth.getDate()}`}
         </Text>
       </Box>
-
 
       <Box display="flex" marginBottom={2} alignSelf="flex-end">
         <Text fontSize="md" fontWeight="bold" marginRight={8}>
@@ -152,7 +150,12 @@ function ProgressBar(props: Props) {
       <BarLegend totals={previousYearToDate} />
 
       <Box>
-        <Text fontSize="sm" >Note: Data for the current year comes from OpenDataPhilly. Unlike PennDOT, this data does not account for multiple fatalities in one crash, so this visualization compares total fatal crash occurences instead.</Text>
+        <Text fontSize="sm">
+          Note: Data for the current year comes from OpenDataPhilly. Unlike
+          PennDOT, this data does not account for multiple fatalities in one
+          crash, so this visualization compares total fatal crash occurences
+          instead.
+        </Text>
       </Box>
     </Box>
   );

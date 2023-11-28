@@ -48,24 +48,43 @@ function Dashboard() {
     dispatch(loadOpenDataPhilly());
   }, []);
 
-  const currentYearTotals : FatalityTotals = {
-    ...(filter.pedestrians && {pedestrian: data.currentYearFatalityTotals.pedestrian}),
-    ...(filter.cyclists && {cyclist: data.currentYearFatalityTotals.cyclist}),
-    ...(filter.motorcyclists && {motorcyclist: data.currentYearFatalityTotals.motorcyclist}),
-    ...(filter.motorists && {motorist: data.currentYearFatalityTotals.motorist}),
-    total: 0
-  }
+  const currentYearTotals: FatalityTotals = {
+    ...(filter.pedestrians && {
+      pedestrian: data.currentYearFatalityTotals.pedestrian,
+    }),
+    ...(filter.cyclists && { cyclist: data.currentYearFatalityTotals.cyclist }),
+    ...(filter.motorcyclists && {
+      motorcyclist: data.currentYearFatalityTotals.motorcyclist,
+    }),
+    ...(filter.motorists && {
+      motorist: data.currentYearFatalityTotals.motorist,
+    }),
+    total: 0,
+  };
 
-  const previousYearToDateTotals : FatalityTotals = {
-    ...(filter.pedestrians && {pedestrian: data.previousYearToDateFatalityTotals.pedestrian}),
-    ...(filter.cyclists && {cyclist: data.previousYearToDateFatalityTotals.cyclist}),
-    ...(filter.motorcyclists && {motorcyclist: data.previousYearToDateFatalityTotals.motorcyclist}),
-    ...(filter.motorists && {motorist: data.previousYearToDateFatalityTotals.motorist}),
-    total: 0
-  }
+  const previousYearToDateTotals: FatalityTotals = {
+    ...(filter.pedestrians && {
+      pedestrian: data.previousYearToDateFatalityTotals.pedestrian,
+    }),
+    ...(filter.cyclists && {
+      cyclist: data.previousYearToDateFatalityTotals.cyclist,
+    }),
+    ...(filter.motorcyclists && {
+      motorcyclist: data.previousYearToDateFatalityTotals.motorcyclist,
+    }),
+    ...(filter.motorists && {
+      motorist: data.previousYearToDateFatalityTotals.motorist,
+    }),
+    total: 0,
+  };
 
-  currentYearTotals.total = Object.values(currentYearTotals).reduce((a, b) => a + b, 0)
-  previousYearToDateTotals.total = Object.values(previousYearToDateTotals).reduce((a, b) => a + b, 0)
+  currentYearTotals.total = Object.values(currentYearTotals).reduce(
+    (a, b) => a + b,
+    0,
+  );
+  previousYearToDateTotals.total = Object.values(
+    previousYearToDateTotals,
+  ).reduce((a, b) => a + b, 0);
 
   return (
     <Box display="flex" w="100%" h="100%">
