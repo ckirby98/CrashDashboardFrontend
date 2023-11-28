@@ -159,7 +159,7 @@ function MapComp() {
     } else {
       centerMap();
     }
-  }, [filter.neighborhood]);
+  }, [filter.neighborhood, centerMap, findAndGoToNeighborhood]);
 
   // neighborhoodsGeoJson.on("mouse-over", function(evt){
 

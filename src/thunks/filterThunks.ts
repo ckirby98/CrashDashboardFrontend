@@ -52,14 +52,7 @@ function getOpenDataPhillyYearOptions() {
   return options;
 }
 
-export const initializeFilter =
-  (): ThunkAction<void, RootState, unknown, AnyAction> => (dispatch) => {
-    dispatch(setYearOptions(pennDOTYearOptipons));
-    dispatch(setFromYear(pennDOTYearOptipons[0]));
-    dispatch(setToYear(pennDOTYearOptipons[pennDOTYearOptipons.length - 1]));
-  };
-
-export const resetFilters =
+const resetFilters =
   (dataset: string): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
     if (dataset) dispatch(setNeighborhood(EMPTY_NEIGHBORHOOD));
@@ -80,3 +73,5 @@ export const resetFilters =
       dispatch(setMajorInjuries(true));
     }
   };
+
+export default resetFilters;

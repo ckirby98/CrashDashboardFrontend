@@ -46,7 +46,7 @@ function Dashboard() {
   useEffect(() => {
     dispatch(loadPenndot());
     dispatch(loadOpenDataPhilly());
-  }, []);
+  }, [dispatch]);
 
   const currentYearTotals: FatalityTotals = {
     ...(filter.pedestrians && {

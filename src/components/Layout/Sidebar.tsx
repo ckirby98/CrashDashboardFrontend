@@ -10,7 +10,7 @@ import {
   Text,
   Image,
 } from "@chakra-ui/react";
-import React, { ChangeEvent, useEffect } from "react";
+import React, { ChangeEvent } from "react";
 import { SIDEBAR_WIDTH } from "../../consts";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
@@ -23,7 +23,7 @@ import {
   setPedestrians,
   setToYear,
 } from "../../slices/filterSlice";
-import { initializeFilter, resetFilters } from "../../thunks/filterThunks";
+import resetFilters from "../../thunks/filterThunks";
 
 const datasetOptions = ["OpenDataPhilly", "PennDOT"];
 
@@ -35,10 +35,6 @@ function Sidebar() {
   const yearFrom = filter.fromYear;
   const yearTo = filter.toYear;
   const { yearOptions } = filter;
-
-  useEffect(() => {
-    dispatch(initializeFilter());
-  }, []);
 
   function getYearToOptionsAfterFrom() {
     return yearOptions.slice(yearOptions.indexOf(yearFrom));
