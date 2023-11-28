@@ -16,25 +16,28 @@ function MapComp() {
   const mapRef = useRef() as any;
   const filter = useAppSelector((state) => state.filter);
 
-  const findAndGoToNeighborhood = useCallback((neighborhood: string) => {
-    neighborhoodsGeoJson
-      .queryFeatures({
-        outSpatialReference: view.extent.spatialReference,
-        orderByFields: ["NAME"],
-      })
-      .then((result) => {
-        const graphics = result.features;
-        graphics.forEach((graphic) => {
-          const { attributes } = graphic;
-          if (attributes.name === neighborhood) {
-            // temp hacky solution as goTo didn't consistently work without full zoom
-            view
-              .goTo(neighborhoodsGeoJson.fullExtent)
-              .then(() => view.goTo(graphic));
-          }
+  const findAndGoToNeighborhood = useCallback(
+    (neighborhood: string) => {
+      neighborhoodsGeoJson
+        .queryFeatures({
+          outSpatialReference: view.extent.spatialReference,
+          orderByFields: ["NAME"],
+        })
+        .then((result) => {
+          const graphics = result.features;
+          graphics.forEach((graphic) => {
+            const { attributes } = graphic;
+            if (attributes.name === neighborhood) {
+              // temp hacky solution as goTo didn't consistently work without full zoom
+              view
+                .goTo(neighborhoodsGeoJson.fullExtent)
+                .then(() => view.goTo(graphic));
+            }
+          });
         });
-      });
-  }, [neighborhoodsGeoJson, view]);
+    },
+    [view],
+  );
 
   // function changeCursor(response: __esri.HitTestResult) {
   //   if (response.results.length > 1) {
@@ -77,7 +80,7 @@ function MapComp() {
 
   const centerMap = useCallback(() => {
     view.goTo(neighborhoodsGeoJson.fullExtent);
-  }, [neighborhoodsGeoJson])
+  }, [view])
 
   /**
    * Create map and load crash data
@@ -159,7 +162,7 @@ function MapComp() {
     } else {
       centerMap();
     }
-  }, [filter.neighborhood]);
+  }, [filter.neighborhood, findAndGoToNeighborhood, centerMap]);
 
   // neighborhoodsGeoJson.on("mouse-over", function(evt){
 
