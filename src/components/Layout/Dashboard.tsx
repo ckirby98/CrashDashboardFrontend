@@ -1,6 +1,6 @@
 import esriConfig from "@arcgis/core/config";
 import { Box, Button } from "@chakra-ui/react";
-import { Select, SingleValue, useChakraSelectProps } from "chakra-react-select";
+import { Select, SingleValue } from "chakra-react-select";
 import { useEffect } from "react";
 import {
   CHART_WIDTH,
@@ -110,7 +110,6 @@ function Dashboard() {
                 options={NEIGHBORHOOD_OPTIONS}
                 value={neighborhood}
                 onChange={handleNeighborhoodChange}
-              // {...selectProps}
               />
             </Box>
           </Box>
