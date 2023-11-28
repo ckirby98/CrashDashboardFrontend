@@ -34,10 +34,10 @@ function Dashboard() {
     }
   };
 
-  const selectProps = useChakraSelectProps({
-    value: neighborhood,
-    onChange: handleNeighborhoodChange,
-  });
+  // const selectProps = useChakraSelectProps({
+  //   value: neighborhood,
+  //   onChange: handleNeighborhoodChange,
+  // });
 
   const handleClear = () => {
     dispatch(setNeighborhood(EMPTY_NEIGHBORHOOD));
@@ -108,7 +108,9 @@ function Dashboard() {
                 size="md"
                 placeholder="Neighborhood"
                 options={NEIGHBORHOOD_OPTIONS}
-                {...selectProps}
+                value={neighborhood}
+                onChange={handleNeighborhoodChange}
+              // {...selectProps}
               />
             </Box>
           </Box>

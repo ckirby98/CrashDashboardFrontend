@@ -2,7 +2,7 @@ import Map from "@arcgis/core/Map";
 import FeatureEffect from "@arcgis/core/layers/support/FeatureEffect";
 import FeatureFilter from "@arcgis/core/layers/support/FeatureFilter";
 import MapView from "@arcgis/core/views/MapView";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useAppSelector } from "../../hooks";
 import {
   neighborhoodsGeoJson,
@@ -16,7 +16,7 @@ function MapComp() {
   const mapRef = useRef() as any;
   const filter = useAppSelector((state) => state.filter);
 
-  const findAndGoToNeighborhood = (neighborhood: string) => {
+  const findAndGoToNeighborhood = useCallback((neighborhood: string) => {
     neighborhoodsGeoJson
       .queryFeatures({
         outSpatialReference: view.extent.spatialReference,
@@ -34,7 +34,7 @@ function MapComp() {
           }
         });
       });
-  };
+  }, [neighborhoodsGeoJson, view]);
 
   // function changeCursor(response: __esri.HitTestResult) {
   //   if (response.results.length > 1) {
@@ -75,9 +75,9 @@ function MapComp() {
   //   }
   // }
 
-  function centerMap() {
+  const centerMap = useCallback(() => {
     view.goTo(neighborhoodsGeoJson.fullExtent);
-  }
+  }, [neighborhoodsGeoJson])
 
   /**
    * Create map and load crash data
@@ -159,7 +159,7 @@ function MapComp() {
     } else {
       centerMap();
     }
-  }, [filter.neighborhood, centerMap, findAndGoToNeighborhood]);
+  }, [filter.neighborhood]);
 
   // neighborhoodsGeoJson.on("mouse-over", function(evt){
 
