@@ -3,16 +3,16 @@
 
 name: Build and deploy Node.js app to Azure Web App - philadelphiacrashdashboardfrontenddev
 
-env:
-  AZURE_WEBAPP_NAME: philadelphiacrashdashboardfrontenddev # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: "./build" # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: "20.x"
-
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: philadelphiacrashdashboardfrontenddev # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: "./build" # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: "20.x"
 
 jobs:
   build:
