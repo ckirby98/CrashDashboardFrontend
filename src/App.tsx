@@ -1,5 +1,4 @@
 import React from "react";
-import "./styles.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
