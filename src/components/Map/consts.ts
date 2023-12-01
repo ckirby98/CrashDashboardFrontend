@@ -123,12 +123,10 @@ export const neighborhoodRenderer = new SimpleRenderer({
 
 const template = {
   title: "{mapname}",
-  content:
-    "<a href='http://localhost:3000/report/{name}'>Neigborhood Report</a>",
 };
 
 export const neighborhoodsGeoJson: GeoJSONLayer = new GeoJSONLayer({
-  url: `${baseUrl}/neighborhoods`,
+  url: `${baseUrl}/geojson?name=neighborhoods`,
   renderer: neighborhoodRenderer,
   popupTemplate: template,
 });
@@ -314,7 +312,7 @@ export const uniqueValueRenderer = new UniqueValueRenderer({
 });
 
 export const penndotPoints: GeoJSONLayer = new GeoJSONLayer({
-  url: `${baseUrl}/penndot_geo`,
+  url: `${baseUrl}/geojson?name=penndot`,
   // featureReduction: clusterConfig,
   outFields: ["*"],
   popupTemplate: {
@@ -387,7 +385,7 @@ export const penndotPoints: GeoJSONLayer = new GeoJSONLayer({
 });
 
 export const openDataPhillyPoints: GeoJSONLayer = new GeoJSONLayer({
-  url: `${baseUrl}/opendataphilly_geo`,
+  url: `${baseUrl}/geojson?name=opendataphilly`,
   // featureReduction: clusterConfig,
   outFields: ["*"],
   popupTemplate: {
@@ -467,7 +465,7 @@ export const openDataPhillyPoints: GeoJSONLayer = new GeoJSONLayer({
   renderer: uniqueValueRenderer,
 });
 
-export const tractsGeoJson: GeoJSONLayer = new GeoJSONLayer({
-  url: `${baseUrl}/tracts`,
-  renderer: tractRenderer,
-});
+// export const tractsGeoJson: GeoJSONLayer = new GeoJSONLayer({
+//   url: `${baseUrl}/geojson`,
+//   renderer: tractRenderer,
+// });

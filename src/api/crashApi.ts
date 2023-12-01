@@ -9,7 +9,7 @@ export default async function getCrashes(
   toYear: string,
 ) {
   const response: AxiosResponse<Crash[]> = await axios.get(
-    `${baseUrl}/${dataset}`,
+    `${baseUrl}/crash/${dataset}`,
     { params: { from: fromYear, to: toYear } },
   );
   return response.data;
