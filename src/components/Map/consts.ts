@@ -19,7 +19,7 @@ export const pedestrianFatalitySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image?type=pedestrian_fatality`,
+  url: `${baseUrl}/image/?type=pedestrian_fatality`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
@@ -29,7 +29,7 @@ export const cyclistFatalitySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image?type=cyclist_fatality`,
+  url: `${baseUrl}/image/?type=cyclist_fatality`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
@@ -39,7 +39,7 @@ export const motorcyclistFatalitySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image?type=motorcyclist_fatality`,
+  url: `${baseUrl}/image/?type=motorcyclist_fatality`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
@@ -49,7 +49,7 @@ export const motoristFatalitySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image?type=motorist_fatality`,
+  url: `${baseUrl}/image/?type=motorist_fatality`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
@@ -59,7 +59,7 @@ export const pedestrianInjurySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image?type=pedestrian_injury`,
+  url: `${baseUrl}/image/?type=pedestrian_injury`,
   contentType: "image/png",
   width: "19px",
   height: "19px",
@@ -69,7 +69,7 @@ export const cyclistInjurySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image?type=cyclist_injury`,
+  url: `${baseUrl}/image/?type=cyclist_injury`,
   contentType: "image/png",
   width: "19px",
   height: "19px",
@@ -79,7 +79,7 @@ export const motorcyclistInjurySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image?type=motorcyclist_injury`,
+  url: `${baseUrl}/image/?type=motorcyclist_injury`,
   contentType: "image/png",
   width: "19px",
   height: "19px",
@@ -89,7 +89,7 @@ export const motoristInjurySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image?type=motorist_injury`,
+  url: `${baseUrl}/image/?type=motorist_injury`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
