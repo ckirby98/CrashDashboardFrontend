@@ -3,6 +3,9 @@ import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
 import UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 
+import penndotGeojson from "../../staticGeojson/penndot.json"
+import neighborhoodsGeojson from "../../staticGeojson/neighborhoods.json"
+
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
 export const clusterSymbol = {
@@ -125,8 +128,14 @@ const template = {
   title: "{mapname}",
 };
 
+const neighborhoodsBlob = new Blob([JSON.stringify(neighborhoodsGeojson)], {
+  type: "application/json",
+});
+
+const neighborhoodsUrl = URL.createObjectURL(neighborhoodsBlob);
+
 export const neighborhoodsGeoJson: GeoJSONLayer = new GeoJSONLayer({
-  url: `${baseUrl}/geojson/?name=neighborhoods`,
+  url: neighborhoodsUrl,
   renderer: neighborhoodRenderer,
   popupTemplate: template,
 });
@@ -311,8 +320,14 @@ export const uniqueValueRenderer = new UniqueValueRenderer({
   ],
 });
 
+const penndotBlob = new Blob([JSON.stringify(penndotGeojson)], {
+  type: "application/json",
+});
+
+const penndotUrl = URL.createObjectURL(penndotBlob);
+
 export const penndotPoints: GeoJSONLayer = new GeoJSONLayer({
-  url: `${baseUrl}/geojson/?name=penndot`,
+  url: penndotUrl,
   // featureReduction: clusterConfig,
   outFields: ["*"],
   popupTemplate: {

@@ -6,8 +6,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useAppSelector } from "../../hooks";
 import {
   neighborhoodsGeoJson,
-  openDataPhillyPoints,
   penndotPoints,
+  openDataPhillyPoints,
 } from "./consts";
 import { constructFilterQuery } from "./utils";
 
