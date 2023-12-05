@@ -2,9 +2,8 @@ import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer";
 import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
 import UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
-
-import penndotGeojson from "../../staticGeojson/penndot.json"
-import neighborhoodsGeojson from "../../staticGeojson/neighborhoods.json"
+import penndotGeojson from "../../staticGeojson/penndot.json";
+import neighborhoodsGeojson from "../../staticGeojson/neighborhoods.json";
 
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -22,7 +21,7 @@ export const pedestrianFatalitySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image/?type=pedestrian_fatality`,
+  url: `${process.env.PUBLIC_URL}pedestrian_fatality.png`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
@@ -32,7 +31,7 @@ export const cyclistFatalitySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image/?type=cyclist_fatality`,
+  url: `${process.env.PUBLIC_URL}cyclist_fatality.png`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
@@ -42,7 +41,7 @@ export const motorcyclistFatalitySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image/?type=motorcyclist_fatality`,
+  url: `${process.env.PUBLIC_URL}motorcyclist_fatality.png`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
@@ -52,7 +51,7 @@ export const motoristFatalitySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image/?type=motorist_fatality`,
+  url: `${process.env.PUBLIC_URL}motorist_fatality.png`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
@@ -62,7 +61,7 @@ export const pedestrianInjurySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image/?type=pedestrian_injury`,
+  url: `${process.env.PUBLIC_URL}pedestrian_injury.png`,
   contentType: "image/png",
   width: "19px",
   height: "19px",
@@ -72,7 +71,7 @@ export const cyclistInjurySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image/?type=cyclist_injury`,
+  url: `${process.env.PUBLIC_URL}cyclist_injury.png`,
   contentType: "image/png",
   width: "19px",
   height: "19px",
@@ -82,7 +81,7 @@ export const motorcyclistInjurySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image/?type=motorcyclist_injury`,
+  url: `${process.env.PUBLIC_URL}motorcyclist_injury.png`,
   contentType: "image/png",
   width: "19px",
   height: "19px",
@@ -92,7 +91,7 @@ export const motoristInjurySymbol = {
   type: "picture-marker",
   color: [10, 119, 40], // Orange
   // url: this._getAQHIIcon(attributes.AQHI),
-  url: `${baseUrl}/image/?type=motorist_injury`,
+  url: `${process.env.PUBLIC_URL}motorist_injury.png`,
   contentType: "image/png",
   width: "23px",
   height: "23px",
