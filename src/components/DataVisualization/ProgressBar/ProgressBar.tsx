@@ -28,6 +28,7 @@ function ProgressBar(props: Props) {
     previousYearWidth = 100;
     currentYearWidth = (currentYear.total / previousYearToDate.total) * 100;
   }
+  console.log("Curr: " + currentYearWidth + " - Prev: " + previousYearWidth)
 
   const categoriesCurrent = getBarCategories(currentYear);
   const categoriesPrevious = getBarCategories(previousYearToDate);
@@ -45,12 +46,14 @@ function ProgressBar(props: Props) {
 
       <Box display="flex" marginBottom={2} alignSelf="flex-end">
         <Text fontSize="md" fontWeight="bold" marginRight={8}>
-          {2023}
+          {lastMonth.getFullYear()}
         </Text>
-        <Bar
-          categories={categoriesCurrent}
-          widthPercentage={currentYearWidth}
-        />
+        <Box w="100%">
+          <Bar
+            categories={categoriesCurrent}
+            widthPercentage={currentYearWidth}
+          />
+        </Box>
       </Box>
 
       <BarLegend
@@ -60,12 +63,14 @@ function ProgressBar(props: Props) {
 
       <Box display="flex" marginBottom={2}>
         <Text fontSize="md" fontWeight="bold" marginRight={8}>
-          {2022}
+          {lastMonth.getFullYear() - 1}
         </Text>
-        <Bar
-          categories={categoriesPrevious}
-          widthPercentage={previousYearWidth}
-        />
+        <Box w="100%">
+          <Bar
+            categories={categoriesPrevious}
+            widthPercentage={previousYearWidth}
+          />
+        </Box>
       </Box>
 
       <BarLegend totals={previousYearToDate} />

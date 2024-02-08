@@ -1,6 +1,6 @@
 import { AnyAction, ThunkAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import getCrashes from "../api/crashApi";
+import { getCrashes } from "../api/crashApi";
 import {
   setCurrentYearFatalityTotals,
   setOpenDataPhillyCrashes,
@@ -44,11 +44,6 @@ function getYearCrashTotals(targetDate: Date, crashes: Crash[]) {
     if (crash.motorist_fatality_count > 0) {
       totals.motorist += 1;
     }
-
-    // totals.pedestrian += crash.pedestrian_fatality_count;
-    // totals.cyclist += crash.cyclist_fatality_count;
-    // totals.motorcyclist += crash.motorcyclist_fatality_count;
-    // totals.motorist += crash.motorist_fatality_count;
   });
   totals.total =
     totals.pedestrian + totals.cyclist + totals.motorcyclist + totals.motorist;
@@ -64,18 +59,18 @@ export const loadOpenDataPhilly =
       "2019",
       targetDate.getFullYear().toString(),
     );
-    const totals = getYearCrashTotals(targetDate, crashes);
-    dispatch(setCurrentYearFatalityTotals(totals));
-    dispatch(setOpenDataPhillyCrashes(crashes));
+    const currentYearTotals = getYearCrashTotals(targetDate, crashes);
+    targetDate.setFullYear(targetDate.getFullYear() - 1)
+    const previousYearToDateTotals = getYearCrashTotals(targetDate, crashes);
+
+    dispatch(setCurrentYearFatalityTotals(currentYearTotals));
+    dispatch(setPreviousYearToDateFatalityTotals(previousYearToDateTotals));
   };
 
 export const loadPenndot =
   (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
     const crashes = await getCrashes("penndot", "2002", "2022");
-    const targetDate = new Date();
-    targetDate.setFullYear(targetDate.getFullYear() - 1);
-    targetDate.setDate(1);
-    const totals = getYearCrashTotals(targetDate, crashes);
-    dispatch(setPreviousYearToDateFatalityTotals(totals));
     dispatch(setPenndotCrashes(crashes));
   };
+
+

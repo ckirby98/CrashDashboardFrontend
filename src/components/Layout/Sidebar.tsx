@@ -9,8 +9,9 @@ import {
   Stack,
   Text,
   Image,
+  Button,
 } from "@chakra-ui/react";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { SIDEBAR_WIDTH } from "../../consts";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
@@ -24,10 +25,13 @@ import {
   setToYear,
 } from "../../slices/filterSlice";
 import resetFilters from "../../thunks/filterThunks";
+import { getReport } from "../../api/crashApi";
 
 const datasetOptions = ["OpenDataPhilly", "PennDOT"];
 
 function Sidebar() {
+  const [downloading, setDownloading] = useState<boolean>(false);
+
   const filter = useAppSelector((state) => state.filter);
   const penndotLoaded = useAppSelector((state) => state.data.penndotLoaded);
   const dispatch = useAppDispatch();
@@ -38,6 +42,12 @@ function Sidebar() {
 
   function getYearToOptionsAfterFrom() {
     return yearOptions.slice(yearOptions.indexOf(yearFrom));
+  }
+
+  const handleDownloadClick = async () => {
+    setDownloading(true);
+    await getReport(filter);
+    setDownloading(false)
   }
 
   const handleDatasetSelect = (event: React.ChangeEvent<{ value: string }>) => {
@@ -222,6 +232,9 @@ function Sidebar() {
           />
         </Box>
       </Stack>
+      <Button disabled={downloading} onClick={handleDownloadClick}>
+        Download Data By Filters
+      </Button>
     </Box>
   );
 }
