@@ -33,7 +33,10 @@ function Sidebar() {
   const [downloading, setDownloading] = useState<boolean>(false);
 
   const filter = useAppSelector((state) => state.filter);
-  const penndotLoaded = useAppSelector((state) => state.data.penndotLoaded);
+  const openDataPhillyLoaded = useAppSelector(
+    (state) => state.data.openDataPhillyLoaded,
+  );
+
   const dispatch = useAppDispatch();
   const { dataset } = filter;
   const yearFrom = filter.fromYear;
@@ -47,8 +50,8 @@ function Sidebar() {
   const handleDownloadClick = async () => {
     setDownloading(true);
     await getReport(filter);
-    setDownloading(false)
-  }
+    setDownloading(false);
+  };
 
   const handleDatasetSelect = (event: React.ChangeEvent<{ value: string }>) => {
     const selectedOption = event.target.value;
@@ -106,13 +109,13 @@ function Sidebar() {
       </Stack>
       <FormControl paddingX={5} paddingBottom={2}>
         <FormLabel fontSize="sm">Dataset</FormLabel>
-        <Select value={dataset} onChange={handleDatasetSelect}>
+        <Select
+          value={dataset}
+          onChange={handleDatasetSelect}
+          disabled={!openDataPhillyLoaded}
+        >
           {datasetOptions.map((datasetOption) => (
-            <option
-              key={datasetOption}
-              value={datasetOption}
-              disabled={datasetOption === datasetOptions[1] && !penndotLoaded}
-            >
+            <option key={datasetOption} value={datasetOption}>
               {datasetOption}
             </option>
           ))}
@@ -232,9 +235,18 @@ function Sidebar() {
           />
         </Box>
       </Stack>
-      <Button disabled={downloading} onClick={handleDownloadClick}>
-        Download Data By Filters
-      </Button>
+      {filter.dataset !== "OpenDataPhilly" && (
+        <Stack spacing={3} p={5}>
+          <Button
+            backgroundColor="gray.500"
+            color="white"
+            isLoading={downloading}
+            onClick={handleDownloadClick}
+          >
+            Download Data By Filters
+          </Button>
+        </Stack>
+      )}
     </Box>
   );
 }

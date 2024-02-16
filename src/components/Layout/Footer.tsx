@@ -25,7 +25,6 @@ function Footer() {
           </Box>
         </Box>
         <Box margin={2} marginTop={0} width="35%" height={CHART_WIDTH / 2}>
-          {/* <IncidentsByYearBarChart /> */}
           <CrashBarChart />
         </Box>
       </Box>

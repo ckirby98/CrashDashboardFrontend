@@ -1,5 +1,5 @@
 import Graphic from "@arcgis/core/Graphic";
-import { NeighborhoodDictionary } from "../../types";
+import { FilterState, NeighborhoodDictionary } from "../../types";
 
 export const createNeighborhoodCrashFrequencyDict = (points: Graphic[]) => {
   const dict: NeighborhoodDictionary = {};
@@ -14,18 +14,21 @@ export const createNeighborhoodCrashFrequencyDict = (points: Graphic[]) => {
   return dict;
 };
 
-export const constructFilterQuery = (
-  fromYear: number,
-  toYear: number,
-  cyclists: boolean,
-  pedestrians: boolean,
-  motorcyclists: boolean,
-  motorists: boolean,
-  fatalities: boolean,
-  majorInjuries: boolean,
-  dataset: string,
-  neighborhood?: string,
-) => {
+export const constructFilterQuery = (filter: FilterState) => {
+  const {
+    pedestrians,
+    cyclists,
+    motorcyclists,
+    motorists,
+    dataset,
+    neighborhood,
+    fatalities,
+    majorInjuries,
+    fromYear,
+    toYear,
+  } = filter;
+  const fromYearParsed = parseInt(fromYear, 10);
+  const toYearParsed = parseInt(toYear, 10);
   let query = "";
 
   function addClause(clause: string, condition: string) {
@@ -39,11 +42,11 @@ export const constructFilterQuery = (
   }
 
   addClause(`id ${dataset === "PennDOT" ? ">" : "<"} 1000000`, "AND");
-  addClause(`year >= ${fromYear}`, "AND");
-  addClause(`year <= ${toYear}`, "AND");
+  addClause(`year >= ${fromYearParsed}`, "AND");
+  addClause(`year <= ${toYearParsed}`, "AND");
 
-  if (neighborhood) {
-    addClause(`neighborhood = '${neighborhood}'`, "AND");
+  if (neighborhood.value) {
+    addClause(`neighborhood = '${neighborhood.value}'`, "AND");
   }
 
   const modes = [];

@@ -9,11 +9,8 @@ interface Props {
   previousYearToDate: FatalityTotals;
 }
 
-const lastMonth = new Date();
-lastMonth.setDate(1);
-lastMonth.setHours(-1);
-
-const month = lastMonth.toLocaleString("default", { month: "long" });
+const targetDate = new Date();
+const month = targetDate.toLocaleString("default", { month: "long" });
 
 function ProgressBar(props: Props) {
   const { currentYear, previousYearToDate } = props;
@@ -28,7 +25,6 @@ function ProgressBar(props: Props) {
     previousYearWidth = 100;
     currentYearWidth = (currentYear.total / previousYearToDate.total) * 100;
   }
-  console.log("Curr: " + currentYearWidth + " - Prev: " + previousYearWidth)
 
   const categoriesCurrent = getBarCategories(currentYear);
   const categoriesPrevious = getBarCategories(previousYearToDate);
@@ -40,13 +36,13 @@ function ProgressBar(props: Props) {
           Year To Date Fatal Crashes
         </Text>
         <Text fontSize="md" fontWeight="bold">
-          {`January 1 - ${month} ${lastMonth.getDate()}`}
+          {`January 1 - ${month} ${targetDate.getDate()}`}
         </Text>
       </Box>
 
       <Box display="flex" marginBottom={2} alignSelf="flex-end">
         <Text fontSize="md" fontWeight="bold" marginRight={8}>
-          {lastMonth.getFullYear()}
+          {targetDate.getFullYear()}
         </Text>
         <Box w="100%">
           <Bar
@@ -63,7 +59,7 @@ function ProgressBar(props: Props) {
 
       <Box display="flex" marginBottom={2}>
         <Text fontSize="md" fontWeight="bold" marginRight={8}>
-          {lastMonth.getFullYear() - 1}
+          {targetDate.getFullYear() - 1}
         </Text>
         <Box w="100%">
           <Bar
@@ -77,10 +73,8 @@ function ProgressBar(props: Props) {
 
       <Box>
         <Text fontSize="sm">
-          Note: Data for the current year comes from OpenDataPhilly. Unlike
-          PennDOT, this data does not account for multiple fatalities in one
-          crash, so this visualization compares total fatal crash occurences
-          instead.
+          Note: Data in this table compares total CRASHES, not total FATALITIES.
+          OpenDataPhilly does not contain as detailed information
         </Text>
       </Box>
     </Box>

@@ -1,6 +1,6 @@
 import esriConfig from "@arcgis/core/config";
 import { Box, Button } from "@chakra-ui/react";
-import { Select, SingleValue } from "chakra-react-select";
+import { ChakraStylesConfig, Select, SingleValue } from "chakra-react-select";
 import { useEffect } from "react";
 import {
   CHART_WIDTH,
@@ -34,10 +34,17 @@ function Dashboard() {
     }
   };
 
-  // const selectProps = useChakraSelectProps({
-  //   value: neighborhood,
-  //   onChange: handleNeighborhoodChange,
-  // });
+  const chakraStyles: ChakraStylesConfig = {
+    dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+      ...prev,
+      "> svg": {
+        transitionDuration: "normal",
+        transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+      },
+      color: "white",
+      background: "gray.500",
+    }),
+  };
 
   const handleClear = () => {
     dispatch(setNeighborhood(EMPTY_NEIGHBORHOOD));
@@ -100,7 +107,12 @@ function Dashboard() {
           <MapView />
 
           <Box position="absolute" zIndex={10} top={4} right={4} display="flex">
-            <Button marginRight="10px" onClick={handleClear}>
+            <Button
+              marginRight="10px"
+              onClick={handleClear}
+              backgroundColor="gray.500"
+              color="white"
+            >
               Clear
             </Button>
             <Box width="275px" bg="rgba(255, 255, 259)" border-radius="6px">
@@ -110,6 +122,7 @@ function Dashboard() {
                 options={NEIGHBORHOOD_OPTIONS}
                 value={neighborhood}
                 onChange={handleNeighborhoodChange}
+                chakraStyles={chakraStyles}
               />
             </Box>
           </Box>

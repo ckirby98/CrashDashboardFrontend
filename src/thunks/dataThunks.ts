@@ -53,18 +53,18 @@ function getYearCrashTotals(targetDate: Date, crashes: Crash[]) {
 export const loadOpenDataPhilly =
   (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
     const targetDate = new Date();
-    targetDate.setDate(1);
     const crashes = await getCrashes(
       "opendataphilly",
       "2019",
       targetDate.getFullYear().toString(),
     );
     const currentYearTotals = getYearCrashTotals(targetDate, crashes);
-    targetDate.setFullYear(targetDate.getFullYear() - 1)
+    targetDate.setFullYear(targetDate.getFullYear() - 1);
     const previousYearToDateTotals = getYearCrashTotals(targetDate, crashes);
 
     dispatch(setCurrentYearFatalityTotals(currentYearTotals));
     dispatch(setPreviousYearToDateFatalityTotals(previousYearToDateTotals));
+    dispatch(setOpenDataPhillyCrashes(crashes));
   };
 
 export const loadPenndot =
@@ -72,5 +72,3 @@ export const loadPenndot =
     const crashes = await getCrashes("penndot", "2002", "2022");
     dispatch(setPenndotCrashes(crashes));
   };
-
-

@@ -39,45 +39,6 @@ function MapComp() {
     [view],
   );
 
-  // function changeCursor(response: __esri.HitTestResult) {
-  //   if (response.results.length > 1) {
-  //     mapRef.current.style.cursor = "pointer";
-  //   } else {
-  //     mapRef.current.style.cursor = "default";
-  //   }
-  // }
-
-  // function getGraphics(response: __esri.HitTestResult) {
-  //   view.graphics.removeAll();
-  //   let type = "";
-  //   let hoveredGraphic: Graphic = new Graphic();
-
-  //   for (const result of response.results) {
-  //     if (result.type === "graphic") {
-  //       const { graphic } = result;
-  //       if (!graphic.attributes.layerId) {
-  //         if (graphic.attributes.id) {
-  //           type = "Crash";
-  //           hoveredGraphic = graphic;
-  //           break;
-  //         }
-  //         if (graphic.attributes.__OBJECTID) {
-  //           hoveredGraphic = graphic;
-  //           type = "Neighborhood";
-  //         }
-  //       }
-  //     }
-  //   }
-  //   if (type === "Neighborhood") {
-  //     view.graphics.remove(hoveredGraphic);
-  //     view.graphics.add(hoveredGraphic);
-  //   }
-  //   if (type === "Crash") {
-  //     view.graphics.remove(hoveredGraphic);
-  //     view.graphics.add(hoveredGraphic);
-  //   }
-  // }
-
   const centerMap = useCallback(() => {
     view.goTo(neighborhoodsGeoJson.fullExtent);
   }, [view]);
@@ -112,49 +73,22 @@ function MapComp() {
    * Filter points for non dataset filter updates
    */
   useEffect(() => {
-    const fromYear = parseInt(filter.fromYear, 10);
-    const toYear = parseInt(filter.toYear, 10);
-
-    const query = constructFilterQuery(
-      fromYear,
-      toYear,
-      filter.cyclists,
-      filter.pedestrians,
-      filter.motorcyclists,
-      filter.motorists,
-      filter.fatalities,
-      filter.majorInjuries,
-      filter.dataset,
-      filter.neighborhood.value,
-    );
+    const query = constructFilterQuery(filter);
 
     penndotPoints.featureEffect = new FeatureEffect({
       filter: new FeatureFilter({
         where: query,
       }),
-      excludedEffect: "opacity(0%)",
-      excludedLabelsVisible: false,
+      excludedEffect: "grayscale(20%) opacity(8%)",
     });
 
     openDataPhillyPoints.featureEffect = new FeatureEffect({
       filter: new FeatureFilter({
         where: query,
       }),
-      excludedEffect: "opacity(0%)",
-      excludedLabelsVisible: false,
+      excludedEffect: "grayscale(20%) opacity(8%)",
     });
-  }, [
-    filter.fromYear,
-    filter.toYear,
-    filter.cyclists,
-    filter.pedestrians,
-    filter.motorcyclists,
-    filter.motorists,
-    filter.fatalities,
-    filter.majorInjuries,
-    filter.neighborhood,
-    filter.dataset,
-  ]);
+  }, [filter]);
 
   useEffect(() => {
     if (filter.neighborhood.value) {
@@ -163,33 +97,6 @@ function MapComp() {
       centerMap();
     }
   }, [filter.neighborhood, findAndGoToNeighborhood, centerMap]);
-
-  // neighborhoodsGeoJson.on("mouse-over", function(evt){
-
-  // })
-
-  // view.when(function () {
-  //   view.whenLayerView(neighborhoodsGeoJson).then(function (lview) {
-  //     reactiveUtils.when(
-  //       () => !lview.updating,
-  //       () => {
-  // 			// Set up a click event handler and retrieve the screen x, y coordinates
-  // 			view.on("pointer-move", function (evt) {
-  // 				var screenPoint = {
-  // 					x: evt.x,
-  // 					y: evt.y
-  // 				};
-  //         lview.highlight
-  // 				lview.hitTest(screenPoint)
-  // 				.then(function (response) {
-  // 				  changeCursor(response);
-  // 				  getGraphics(response);
-  // 				});
-  // 			});
-  //       },
-  //     );
-  //   });
-  // });
 
   return <div className="mapDiv" ref={mapRef} />;
 }
