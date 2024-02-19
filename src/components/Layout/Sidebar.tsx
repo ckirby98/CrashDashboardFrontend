@@ -162,7 +162,7 @@ function Sidebar() {
             isChecked={filter.majorInjuries}
             onChange={handleMajorInjuriesCheckbox}
           >
-            Serious Injuries
+            Severe Injuries
           </Checkbox>
           <Image
             src={`${process.env.PUBLIC_URL}orange_circle.png`}
