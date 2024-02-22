@@ -256,6 +256,9 @@ function Sidebar() {
           </Button>
         </Stack>
       )}
+      <Text p={5} fontWeight='bold'>
+        Issues/Inquiries: colin@kirby.net
+      </Text>
     </Box>
   );
 }
