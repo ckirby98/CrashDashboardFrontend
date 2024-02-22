@@ -1,5 +1,5 @@
 import Graphic from "@arcgis/core/Graphic";
-import { FilterState, NeighborhoodDictionary } from "../../types";
+import { FilterCrashInfo, NeighborhoodDictionary } from "../../types";
 
 export const createNeighborhoodCrashFrequencyDict = (points: Graphic[]) => {
   const dict: NeighborhoodDictionary = {};
@@ -14,7 +14,7 @@ export const createNeighborhoodCrashFrequencyDict = (points: Graphic[]) => {
   return dict;
 };
 
-export const constructFilterQuery = (filter: FilterState) => {
+export const constructFilterQuery = (filter: FilterCrashInfo) => {
   const {
     pedestrians,
     cyclists,

@@ -1,4 +1,4 @@
-import { Crash, FilterState } from "../../types";
+import { Crash, FilterCrashInfo } from "../../types";
 
 const categoryCountMap = {
   pedestrian_fatality_count: 0,
@@ -18,32 +18,23 @@ export function getYearRange(fromYear: string, toYear: string) {
   );
 }
 
-export function getCrashTypeTotalsByYear(data: Crash[], filter: FilterState) {
+export function getCrashTypeTotalsByYear(
+  data: Crash[],
+  crashInfo: FilterCrashInfo,
+) {
   const crashesByYear = new Map<number, Map<string, number>>();
-  const yearRange = getYearRange(filter.fromYear, filter.toYear);
+  const yearRange = getYearRange(crashInfo.fromYear, crashInfo.toYear);
   yearRange.forEach((year) =>
     crashesByYear.set(year, new Map(Object.entries(categoryCountMap))),
   );
-
-  // function showCategory(mode: string, severity: string, neighborhood: string) {
-  //   if (mode === "Pedestrian" && !filter.pedestrians) return false;
-  //   if (mode === "Cyclist" && !filter.cyclists) return false;
-  //   if (mode === "Motorcyclist" && !filter.motorcyclists) return false;
-  //   if (mode === "Motorist" && !filter.motorists) return false;
-  //   if (severity === "Death" && !filter.fatalities) return false;
-  //   if (severity === "Injury" && !filter.majorInjuries) return false;
-  //   if (filter.neighborhood.value && filter.neighborhood.value !== neighborhood)
-  //     return false;
-  //   return true;
-  // }
 
   data.forEach((crash) => {
     const map = crashesByYear.get(crash.year);
     if (
       map &&
       !(
-        filter.neighborhood.value &&
-        filter.neighborhood.value !== crash.neighborhood
+        crashInfo.neighborhood.value &&
+        crashInfo.neighborhood.value !== crash.neighborhood
       )
     ) {
       map.forEach((value, key) => {

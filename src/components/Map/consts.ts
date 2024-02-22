@@ -2,8 +2,12 @@ import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer";
 import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
 import UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
-import penndotGeojson from "../../staticGeojson/penndot.json";
-import neighborhoodsGeojson from "../../staticGeojson/neighborhoods.json";
+import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import penndotJSON from "../../staticGeojson/penndot.json";
+import neighborhoodsJSON from "../../staticGeojson/neighborhoods.json";
+import schoolsJSON from "../../staticGeojson/schools.json";
+import recCentersJSON from "../../staticGeojson/rec_centers.json";
+import trafficCalmingJSON from "../../staticGeojson/traffic_calming_devices.json";
 
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -97,6 +101,36 @@ export const motoristInjurySymbol = {
   height: "23px",
 };
 
+export const schoolSymbol = {
+  type: "picture-marker",
+  color: [10, 119, 40], // Orange
+  // url: this._getAQHIIcon(attributes.AQHI),
+  url: `${process.env.PUBLIC_URL}school.png`,
+  contentType: "image/png",
+  width: "20px",
+  height: "20px",
+};
+
+export const recCenterSymbol = {
+  type: "picture-marker",
+  color: [10, 119, 40], // Orange
+  // url: this._getAQHIIcon(attributes.AQHI),
+  url: `${process.env.PUBLIC_URL}rec_center.png`,
+  contentType: "image/png",
+  width: "20px",
+  height: "20px",
+};
+
+export const trafficCalmingSymbol = {
+  type: "picture-marker",
+  color: [10, 119, 40], // Orange
+  // url: this._getAQHIIcon(attributes.AQHI),
+  url: `${process.env.PUBLIC_URL}traffic_calming.png`,
+  contentType: "image/png",
+  width: "20px",
+  height: "20px",
+};
+
 const simpleFillSymbol = new SimpleFillSymbol({
   color: [197, 208, 224, 0.3],
   style: "solid",
@@ -115,6 +149,12 @@ const simpleFillSymbolTract = new SimpleFillSymbol({
   },
 });
 
+const simpleRoadLine = new SimpleLineSymbol({
+  width: "4px",
+  style: "solid",
+  color: [85, 106, 243, 0.8],
+});
+
 export const tractRenderer = new SimpleRenderer({
   symbol: simpleFillSymbolTract,
 });
@@ -123,148 +163,120 @@ export const neighborhoodRenderer = new SimpleRenderer({
   symbol: simpleFillSymbol,
 });
 
-const template = {
-  title: "{mapname}",
-};
+export const stateRoadRenderer = new SimpleRenderer({
+  symbol: simpleRoadLine,
+});
 
-const neighborhoodsBlob = new Blob([JSON.stringify(neighborhoodsGeojson)], {
+export const schoolsRenderer = new SimpleRenderer({
+  symbol: schoolSymbol,
+});
+
+export const recCentersRenderer = new SimpleRenderer({
+  symbol: recCenterSymbol,
+});
+
+export const trafficCalmingRenderer = new SimpleRenderer({
+  symbol: trafficCalmingSymbol,
+});
+
+// const neighborhodTemplate = {
+//   title: "{mapname}",
+// };
+
+const neighborhoodsBlob = new Blob([JSON.stringify(neighborhoodsJSON)], {
+  type: "application/json",
+});
+
+const penndotBlob = new Blob([JSON.stringify(penndotJSON)], {
+  type: "application/json",
+});
+
+const schoolsBlob = new Blob([JSON.stringify(schoolsJSON)], {
+  type: "application/json",
+});
+
+const recCentersBlob = new Blob([JSON.stringify(recCentersJSON)], {
+  type: "application/json",
+});
+
+const trafficCalmingBlob = new Blob([JSON.stringify(trafficCalmingJSON)], {
   type: "application/json",
 });
 
 const neighborhoodsUrl = URL.createObjectURL(neighborhoodsBlob);
+const penndotUrl = URL.createObjectURL(penndotBlob);
+const schoolsUrl = URL.createObjectURL(schoolsBlob);
+const recCentersUrl = URL.createObjectURL(recCentersBlob);
+const trafficCalmingUrl = URL.createObjectURL(trafficCalmingBlob);
 
 export const neighborhoodsGeoJson: GeoJSONLayer = new GeoJSONLayer({
   url: neighborhoodsUrl,
   renderer: neighborhoodRenderer,
-  popupTemplate: template,
+  // popupTemplate: neighborhodTemplate,
 });
 
-// const less10 = {
-//   type: "simple-marker",
-//   color: "#f0ff00",
-//   outline: {
-//     color: "rgba(153, 31, 23, 0.3)",
-//     width: 0.3,
-//   },
-// };
+export const stateRoadsGeoJson: GeoJSONLayer = new GeoJSONLayer({
+  url: `${baseUrl}/geojson/?name=philadelphia_state_roads`,
+  renderer: stateRoadRenderer,
+});
 
-// const less25 = {
-//   type: "simple-marker",
-//   color: "#ffce00",
-//   outline: {
-//     color: "rgba(153, 31, 23, 0.3)",
-//     width: 0.3,
-//   },
-// };
+export const schoolsGeoJson: GeoJSONLayer = new GeoJSONLayer({
+  url: schoolsUrl,
+  renderer: schoolsRenderer,
+  popupTemplate: {
+    title: "{SCHOOL_NAME}",
+    content: [
+      {
+        type: "fields",
+        fieldInfos: [
+          {
+            fieldName: "TYPE_SPECIFIC",
+            label: "Type",
+          },
+          {
+            fieldName: "GRADE_LEVEL",
+            label: "Grade Level",
+          },
+          {
+            fieldName: "STREET_ADDRESS",
+            label: "Street Address",
+          },
+        ],
+      },
+    ],
+  },
+});
 
-// const more25 = {
-//   type: "simple-marker",
-//   color: "#ff9a00",
-//   outline: {
-//     color: "rgba(153, 31, 23, 0.3)",
-//     width: 0.3,
-//   },
-// };
+export const recCentersGeoJson: GeoJSONLayer = new GeoJSONLayer({
+  url: recCentersUrl,
+  renderer: recCentersRenderer,
+  popupTemplate: {
+    title: "{PARK_NAME}",
+    content: [
+      {
+        type: "fields",
+        fieldInfos: [
+          {
+            fieldName: "COMMENTS",
+            label: "Comments",
+          },
+          {
+            fieldName: "PROGRAM_TYPE",
+            label: "TYPE",
+          },
+        ],
+      },
+    ],
+  },
+});
 
-// const more50 = {
-//   type: "simple-marker",
-//   color: "#ff5a00",
-//   outline: {
-//     color: "rgba(153, 31, 23, 0.3)",
-//     width: 0.3,
-//   },
-// };
-
-// const more100 = {
-//   type: "simple-marker",
-//   color: "#ff0000",
-//   outline: {
-//     color: "rgba(153, 31, 23, 0.3)",
-//     width: 0.3,
-//   },
-// };
-
-// const classBreaksRenderer = new ClassBreaksRenderer({
-//   field: "cluster_count", // total number of adults (25+) with a college degree
-//   defaultLabel: "no data", // legend label for features that don't match a class break
-//   classBreakInfos: [
-//     {
-//       minValue: 1,
-//       maxValue: 9,
-//       symbol: less10,
-//       label: "< 10", // label for symbol in legend
-//     },
-//     {
-//       minValue: 10,
-//       maxValue: 24,
-//       symbol: less25,
-//       label: "11 - 24", // label for symbol in legend
-//     },
-//     {
-//       minValue: 25,
-//       maxValue: 49,
-//       symbol: more25,
-//       label: "25 - 49", // label for symbol in legend
-//     },
-//     {
-//       minValue: 50,
-//       maxValue: 99,
-//       symbol: more50,
-//       label: "50 - 99", // label for symbol in legend
-//     },
-//     {
-//       minValue: 100,
-//       maxValue: 100000,
-//       symbol: more100,
-//       label: "100+", // label for symbol in legend
-//     },
-//   ],
-// });
-
-// const clusterConfig = new FeatureReductionCluster({
-//   fields: [
-//     new AggregateField({
-//       name: "SUM_INCIDENTS",
-//       onStatisticField: "total_incidents", // layer field
-//       statisticType: "sum",
-//     }),
-//   ],
-//   clusterRadius: "80px",
-//   popupTemplate: {
-//     title: "Cluster summary",
-//     content: "This cluster represents {cluster_count} earthquakes.",
-//     fieldInfos: [
-//       {
-//         fieldName: "cluster_count",
-//         format: {
-//           places: 0,
-//           digitSeparator: true,
-//         },
-//       },
-//     ],
-//   },
-//   clusterMinSize: "24px",
-//   clusterMaxSize: "60px",
-//   renderer: classBreaksRenderer,
-//   labelingInfo: [
-//     {
-//       deconflictionStrategy: "none",
-//       labelExpressionInfo: {
-//         expression: "Text($feature.cluster_count, '#,###')",
-//       },
-//       symbol: {
-//         type: "text",
-//         color: "#004a5d",
-//         font: {
-//           weight: "bold",
-//           family: "Noto Sans",
-//           size: "12px",
-//         },
-//       },
-//       labelPlacement: "center-center",
-//     },
-//   ],
-// });
+export const trafficCalmingGeoJson: GeoJSONLayer = new GeoJSONLayer({
+  url: trafficCalmingUrl,
+  renderer: trafficCalmingRenderer,
+  popupTemplate: {
+    title: "{id}",
+  },
+});
 
 export const uniqueValueRenderer = new UniqueValueRenderer({
   // field: "mode",
@@ -318,12 +330,6 @@ export const uniqueValueRenderer = new UniqueValueRenderer({
     },
   ],
 });
-
-const penndotBlob = new Blob([JSON.stringify(penndotGeojson)], {
-  type: "application/json",
-});
-
-const penndotUrl = URL.createObjectURL(penndotBlob);
 
 export const penndotPoints: GeoJSONLayer = new GeoJSONLayer({
   url: penndotUrl,
@@ -478,8 +484,3 @@ export const openDataPhillyPoints: GeoJSONLayer = new GeoJSONLayer({
   },
   renderer: uniqueValueRenderer,
 });
-
-// export const tractsGeoJson: GeoJSONLayer = new GeoJSONLayer({
-//   url: `${baseUrl}/geojson`,
-//   renderer: tractRenderer,
-// });

@@ -1,54 +1,27 @@
 import esriConfig from "@arcgis/core/config";
-import { Box, Button } from "@chakra-ui/react";
-import { ChakraStylesConfig, Select, SingleValue } from "chakra-react-select";
+import { Box } from "@chakra-ui/react";
 import { useEffect } from "react";
 import {
-  CHART_WIDTH,
-  EMPTY_NEIGHBORHOOD,
-  NEIGHBORHOOD_OPTIONS,
-} from "../../consts";
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
+import { CHART_WIDTH } from "../../consts";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { loadOpenDataPhilly, loadPenndot } from "../../thunks/dataThunks";
 import MapView from "../Map/MapComp";
 import Sidebar from "./Sidebar";
-
-import { setNeighborhood } from "../../slices/filterSlice";
-import { FatalityTotals, Neigborhood } from "../../types";
+import { FatalityTotals } from "../../types";
 import CrashBarChart from "../DataVisualization/CrashBarChart";
 import ProgressBar from "../DataVisualization/ProgressBar/ProgressBar";
+import MapTopOverlay from "./MapTopOverlay";
 
 esriConfig.apiKey =
   "AAPK03acd7bd14cc4cca80c38b0f14ac1c70NYgi-zHokSt0u6Aj2xISCHucc66tY8n8V-Iu4JcgG0FMGn3q2NRCedFh3x9UPGyB";
 
 function Dashboard() {
   const dispatch = useAppDispatch();
-  const neighborhood = useAppSelector((state) => state.filter.neighborhood);
   const data = useAppSelector((state) => state.data);
-  const filter = useAppSelector((state) => state.filter);
-
-  const handleNeighborhoodChange = (
-    selectedNeighborhood: SingleValue<Neigborhood>,
-  ) => {
-    if (selectedNeighborhood) {
-      dispatch(setNeighborhood(selectedNeighborhood));
-    }
-  };
-
-  const chakraStyles: ChakraStylesConfig = {
-    dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
-      ...prev,
-      "> svg": {
-        transitionDuration: "normal",
-        transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
-      },
-      color: "white",
-      background: "gray.500",
-    }),
-  };
-
-  const handleClear = () => {
-    dispatch(setNeighborhood(EMPTY_NEIGHBORHOOD));
-  };
+  const crashInfo = useAppSelector((state) => state.filter.crashInfo);
 
   useEffect(() => {
     dispatch(loadPenndot());
@@ -56,30 +29,32 @@ function Dashboard() {
   }, [dispatch]);
 
   const currentYearTotals: FatalityTotals = {
-    ...(filter.pedestrians && {
+    ...(crashInfo.pedestrians && {
       pedestrian: data.currentYearFatalityTotals.pedestrian,
     }),
-    ...(filter.cyclists && { cyclist: data.currentYearFatalityTotals.cyclist }),
-    ...(filter.motorcyclists && {
+    ...(crashInfo.cyclists && {
+      cyclist: data.currentYearFatalityTotals.cyclist,
+    }),
+    ...(crashInfo.motorcyclists && {
       motorcyclist: data.currentYearFatalityTotals.motorcyclist,
     }),
-    ...(filter.motorists && {
+    ...(crashInfo.motorists && {
       motorist: data.currentYearFatalityTotals.motorist,
     }),
     total: 0,
   };
 
   const previousYearToDateTotals: FatalityTotals = {
-    ...(filter.pedestrians && {
+    ...(crashInfo.pedestrians && {
       pedestrian: data.previousYearToDateFatalityTotals.pedestrian,
     }),
-    ...(filter.cyclists && {
+    ...(crashInfo.cyclists && {
       cyclist: data.previousYearToDateFatalityTotals.cyclist,
     }),
-    ...(filter.motorcyclists && {
+    ...(crashInfo.motorcyclists && {
       motorcyclist: data.previousYearToDateFatalityTotals.motorcyclist,
     }),
-    ...(filter.motorists && {
+    ...(crashInfo.motorists && {
       motorist: data.previousYearToDateFatalityTotals.motorist,
     }),
     total: 0,
@@ -95,7 +70,7 @@ function Dashboard() {
 
   return (
     <Box display="flex" w="100%" h="100%">
-      <Sidebar />
+      {isBrowser && <Sidebar />}
       <Box w="100%" h="100%" position="relative">
         <Box
           w="100%"
@@ -105,57 +80,54 @@ function Dashboard() {
           rounded="md"
         >
           <MapView />
-
-          <Box position="absolute" zIndex={10} top={4} right={4} display="flex">
-            <Button
-              marginRight="10px"
-              onClick={handleClear}
-              backgroundColor="gray.500"
-              color="white"
+          {isBrowser && (
+            <>
+              <MapTopOverlay />
+              <Box
+                margin={2}
+                w="52%"
+                height={CHART_WIDTH / 2}
+                position="absolute"
+                zIndex={10}
+                bottom={2}
+                left={2}
+                padding={2}
+                bg="rgba(245, 245, 249, 0.8)"
+              >
+                <ProgressBar
+                  currentYear={currentYearTotals}
+                  previousYearToDate={previousYearToDateTotals}
+                />
+              </Box>
+              <Box
+                margin={2}
+                w="45%"
+                h={CHART_WIDTH / 2}
+                position="absolute"
+                zIndex={10}
+                bottom={2}
+                right={2}
+                padding={2}
+                bg="rgba(245, 245, 249, 0.8)"
+              >
+                <CrashBarChart />
+              </Box>
+            </>
+          )}
+          {isMobile && (
+            <Box
+              w="100%"
+              h="15%"
+              position="absolute"
+              zIndex={10}
+              bottom={2}
+              padding={2}
+              bg="rgba(245, 245, 249, 0.8)"
             >
-              Clear
-            </Button>
-            <Box width="275px" bg="rgba(255, 255, 259)" border-radius="6px">
-              <Select
-                size="md"
-                placeholder="Neighborhood"
-                options={NEIGHBORHOOD_OPTIONS}
-                value={neighborhood}
-                onChange={handleNeighborhoodChange}
-                chakraStyles={chakraStyles}
-              />
+              The majority of features are currently not available on mobile
+              devices, please use a desktop or laptop.
             </Box>
-          </Box>
-
-          <Box
-            margin={2}
-            w="52%"
-            height={CHART_WIDTH / 2}
-            position="absolute"
-            zIndex={10}
-            bottom={2}
-            left={2}
-            padding={2}
-            bg="rgba(245, 245, 249, 0.8)"
-          >
-            <ProgressBar
-              currentYear={currentYearTotals}
-              previousYearToDate={previousYearToDateTotals}
-            />
-          </Box>
-          <Box
-            margin={2}
-            w="45%"
-            h={CHART_WIDTH / 2}
-            position="absolute"
-            zIndex={10}
-            bottom={2}
-            right={2}
-            padding={2}
-            bg="rgba(245, 245, 249, 0.8)"
-          >
-            <CrashBarChart />
-          </Box>
+          )}
         </Box>
         {/* <Footer /> */}
       </Box>

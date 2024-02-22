@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Crash, FilterState } from "../types";
+import { Crash, FilterCrashInfo } from "../types";
 import getOutputFilename from "./utils";
 
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
@@ -26,22 +26,22 @@ export async function getCrashes(
   return response.data;
 }
 
-export async function getReport(filter: FilterState) {
+export async function getReport(crashInfo: FilterCrashInfo) {
   const params = new URLSearchParams();
-  if (filter.pedestrians) params.append("modes", "pedestrian");
-  if (filter.cyclists) params.append("modes", "cyclist");
-  if (filter.motorcyclists) params.append("modes", "motorcyclist");
-  if (filter.motorists) params.append("modes", "motorist");
-  if (filter.fatalities) params.append("severities", "fatality");
-  if (filter.majorInjuries) params.append("severities", "injury");
-  params.append("from", filter.fromYear);
-  params.append("to", filter.toYear);
+  if (crashInfo.pedestrians) params.append("modes", "pedestrian");
+  if (crashInfo.cyclists) params.append("modes", "cyclist");
+  if (crashInfo.motorcyclists) params.append("modes", "motorcyclist");
+  if (crashInfo.motorists) params.append("modes", "motorist");
+  if (crashInfo.fatalities) params.append("severities", "fatality");
+  if (crashInfo.majorInjuries) params.append("severities", "injury");
+  params.append("from", crashInfo.fromYear);
+  params.append("to", crashInfo.toYear);
 
   const response = await axios.get(`${baseUrl}/crash/report`, {
     params,
     responseType: "blob",
   });
   const file = response.data;
-  const fileName = getOutputFilename(filter);
+  const fileName = getOutputFilename(crashInfo);
   downloadFile(file, fileName);
 }

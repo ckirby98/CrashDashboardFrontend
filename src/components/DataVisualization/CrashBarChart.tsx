@@ -27,14 +27,14 @@ interface ChartYear {
 
 function CrashBarChart() {
   const data = useAppSelector((state) => state.data);
-  const filter = useAppSelector((state) => state.filter);
+  const crashInfo = useAppSelector((state) => state.filter.crashInfo);
 
   const getChartData = useCallback(() => {
     const crashTypeTotalsByYear = getCrashTypeTotalsByYear(
-      filter.dataset === "PennDOT"
+      crashInfo.dataset === "PennDOT"
         ? data.penndotCrashes
         : data.openDataPhillyCrashes,
-      filter,
+      crashInfo,
     );
 
     const crashesByYear: ChartYear[] = [];
@@ -55,7 +55,7 @@ function CrashBarChart() {
       });
     });
     return crashesByYear;
-  }, [data, filter]);
+  }, [data, crashInfo]);
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -75,7 +75,7 @@ function CrashBarChart() {
         <YAxis />
         <Tooltip />
         <Legend />
-        {filter.pedestrians && filter.fatalities && (
+        {crashInfo.pedestrians && crashInfo.fatalities && (
           <Bar
             dataKey="pedestrian_fatality_count"
             name="Pedestrian Fatalities"
@@ -83,7 +83,7 @@ function CrashBarChart() {
             fill="#996e4b"
           />
         )}
-        {filter.pedestrians && filter.majorInjuries && (
+        {crashInfo.pedestrians && crashInfo.majorInjuries && (
           <Bar
             dataKey="pedestrian_injury_count"
             name="Pedestrian Injuries"
@@ -91,7 +91,7 @@ function CrashBarChart() {
             fill="#E5BFA0"
           />
         )}
-        {filter.cyclists && filter.fatalities && (
+        {crashInfo.cyclists && crashInfo.fatalities && (
           <Bar
             dataKey="cyclist_fatality_count"
             name="Cyclist Fatalities"
@@ -99,7 +99,7 @@ function CrashBarChart() {
             fill="#3a607a"
           />
         )}
-        {filter.cyclists && filter.majorInjuries && (
+        {crashInfo.cyclists && crashInfo.majorInjuries && (
           <Bar
             dataKey="cyclist_injury_count"
             name="Cyclist Injuries"
@@ -107,7 +107,7 @@ function CrashBarChart() {
             fill="#9AC2DE"
           />
         )}
-        {filter.motorcyclists && filter.fatalities && (
+        {crashInfo.motorcyclists && crashInfo.fatalities && (
           <Bar
             dataKey="motorcyclist_fatality_count"
             name="Motorcyclist Fatalities"
@@ -115,7 +115,7 @@ function CrashBarChart() {
             fill="#345c5c"
           />
         )}
-        {filter.motorcyclists && filter.majorInjuries && (
+        {crashInfo.motorcyclists && crashInfo.majorInjuries && (
           <Bar
             dataKey="motorcyclist_injury_count"
             name="Motorcyclist Injuries"
@@ -123,7 +123,7 @@ function CrashBarChart() {
             fill="#82A6A6"
           />
         )}
-        {filter.motorists && filter.fatalities && (
+        {crashInfo.motorists && crashInfo.fatalities && (
           <Bar
             dataKey="motorist_fatality_count"
             name="Motorist Fatalities"
@@ -131,7 +131,7 @@ function CrashBarChart() {
             fill="#4f578c"
           />
         )}
-        {filter.motorists && filter.majorInjuries && (
+        {crashInfo.motorists && crashInfo.majorInjuries && (
           <Bar
             dataKey="motorist_injury_count"
             name="Motorist Injuries"

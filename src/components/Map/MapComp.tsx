@@ -8,6 +8,10 @@ import {
   neighborhoodsGeoJson,
   penndotPoints,
   openDataPhillyPoints,
+  stateRoadsGeoJson,
+  schoolsGeoJson,
+  recCentersGeoJson,
+  trafficCalmingGeoJson,
 } from "./consts";
 import { constructFilterQuery } from "./utils";
 
@@ -48,7 +52,15 @@ function MapComp() {
    */
   useEffect(() => {
     const mainMap = new Map({
-      layers: [neighborhoodsGeoJson, penndotPoints, openDataPhillyPoints],
+      layers: [
+        neighborhoodsGeoJson,
+        stateRoadsGeoJson,
+        penndotPoints,
+        openDataPhillyPoints,
+        schoolsGeoJson,
+        recCentersGeoJson,
+        trafficCalmingGeoJson,
+      ],
       basemap: "arcgis-topographic",
     });
 
@@ -73,7 +85,7 @@ function MapComp() {
    * Filter points for non dataset filter updates
    */
   useEffect(() => {
-    const query = constructFilterQuery(filter);
+    const query = constructFilterQuery(filter.crashInfo);
 
     penndotPoints.featureEffect = new FeatureEffect({
       filter: new FeatureFilter({
@@ -88,15 +100,24 @@ function MapComp() {
       }),
       excludedEffect: "grayscale(20%) opacity(8%)",
     });
-  }, [filter]);
+  }, [filter.crashInfo]);
 
   useEffect(() => {
-    if (filter.neighborhood.value) {
-      findAndGoToNeighborhood(filter.neighborhood.value);
+    stateRoadsGeoJson.visible = filter.displayableInfo.stateRoads;
+    schoolsGeoJson.visible = filter.displayableInfo.schoolsAndRec;
+    recCentersGeoJson.visible = filter.displayableInfo.schoolsAndRec;
+    trafficCalmingGeoJson.visible = filter.displayableInfo.trafficCalming;
+    openDataPhillyPoints.visible = filter.displayableInfo.points;
+    penndotPoints.visible = filter.displayableInfo.points;
+  }, [filter.displayableInfo]);
+
+  useEffect(() => {
+    if (filter.crashInfo.neighborhood.value) {
+      findAndGoToNeighborhood(filter.crashInfo.neighborhood.value);
     } else {
       centerMap();
     }
-  }, [filter.neighborhood, findAndGoToNeighborhood, centerMap]);
+  }, [filter.crashInfo.neighborhood, findAndGoToNeighborhood, centerMap]);
 
   return <div className="mapDiv" ref={mapRef} />;
 }

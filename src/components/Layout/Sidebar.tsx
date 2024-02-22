@@ -33,23 +33,22 @@ function Sidebar() {
   const [downloading, setDownloading] = useState<boolean>(false);
 
   const filter = useAppSelector((state) => state.filter);
+  const { crashInfo } = filter;
   const openDataPhillyLoaded = useAppSelector(
     (state) => state.data.openDataPhillyLoaded,
   );
 
   const dispatch = useAppDispatch();
-  const { dataset } = filter;
-  const yearFrom = filter.fromYear;
-  const yearTo = filter.toYear;
+  const { dataset, fromYear, toYear } = crashInfo;
   const { yearOptions } = filter;
 
   function getYearToOptionsAfterFrom() {
-    return yearOptions.slice(yearOptions.indexOf(yearFrom));
+    return yearOptions.slice(yearOptions.indexOf(fromYear));
   }
 
   const handleDownloadClick = async () => {
     setDownloading(true);
-    await getReport(filter);
+    await getReport(filter.crashInfo);
     setDownloading(false);
   };
 
@@ -63,7 +62,7 @@ function Sidebar() {
   ) => {
     const selectedOption = event.target.value;
     dispatch(setFromYear(selectedOption));
-    if (selectedOption > yearTo) {
+    if (selectedOption > toYear) {
       dispatch(setToYear(selectedOption));
     }
   };
@@ -124,7 +123,7 @@ function Sidebar() {
       <HStack spacing={2} paddingX={5} paddingBottom={5}>
         <FormControl>
           <FormLabel fontSize="sm">From</FormLabel>
-          <Select value={yearFrom} onChange={handleFromYearSelect}>
+          <Select value={fromYear} onChange={handleFromYearSelect}>
             {yearOptions.map((year) => (
               <option value={year}>{year}</option>
             ))}
@@ -132,7 +131,7 @@ function Sidebar() {
         </FormControl>
         <FormControl>
           <FormLabel fontSize="sm">To</FormLabel>
-          <Select value={yearTo} onChange={handleToYearSelect}>
+          <Select value={toYear} onChange={handleToYearSelect}>
             {getYearToOptionsAfterFrom().map((year) => (
               <option value={year}>{year}</option>
             ))}
@@ -145,8 +144,8 @@ function Sidebar() {
         </Text>
         <Box display="flex" justifyContent="space-between">
           <Checkbox
-            disabled={!filter.majorInjuries}
-            isChecked={filter.fatalities}
+            disabled={!crashInfo.majorInjuries}
+            isChecked={crashInfo.fatalities}
             onChange={handleFatalitiesCheckbox}
           >
             Fatalities
@@ -158,8 +157,10 @@ function Sidebar() {
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Checkbox
-            disabled={filter.dataset === "OpenDataPhilly" || !filter.fatalities}
-            isChecked={filter.majorInjuries}
+            disabled={
+              crashInfo.dataset === "OpenDataPhilly" || !crashInfo.fatalities
+            }
+            isChecked={crashInfo.majorInjuries}
             onChange={handleMajorInjuriesCheckbox}
           >
             Severe Injuries
@@ -177,9 +178,11 @@ function Sidebar() {
         <Box display="flex" justifyContent="space-between">
           <Checkbox
             disabled={
-              !filter.cyclists && !filter.motorcyclists && !filter.motorists
+              !crashInfo.cyclists &&
+              !crashInfo.motorcyclists &&
+              !crashInfo.motorists
             }
-            isChecked={filter.pedestrians}
+            isChecked={crashInfo.pedestrians}
             onChange={handlePedestrianCheckbox}
           >
             Pedestrians
@@ -192,9 +195,11 @@ function Sidebar() {
         <Box display="flex" justifyContent="space-between">
           <Checkbox
             disabled={
-              !filter.pedestrians && !filter.motorists && !filter.motorcyclists
+              !crashInfo.pedestrians &&
+              !crashInfo.motorists &&
+              !crashInfo.motorcyclists
             }
-            isChecked={filter.cyclists}
+            isChecked={crashInfo.cyclists}
             onChange={handleCyclistCheckbox}
           >
             Cyclists
@@ -207,9 +212,11 @@ function Sidebar() {
         <Box display="flex" justifyContent="space-between">
           <Checkbox
             disabled={
-              !filter.pedestrians && !filter.motorists && !filter.cyclists
+              !crashInfo.pedestrians &&
+              !crashInfo.motorists &&
+              !crashInfo.cyclists
             }
-            isChecked={filter.motorcyclists}
+            isChecked={crashInfo.motorcyclists}
             onChange={handleMotorcyclistCheckbox}
           >
             Motorcyclists
@@ -222,9 +229,11 @@ function Sidebar() {
         <Box display="flex" justifyContent="space-between">
           <Checkbox
             disabled={
-              !filter.cyclists && !filter.pedestrians && !filter.motorcyclists
+              !crashInfo.cyclists &&
+              !crashInfo.pedestrians &&
+              !crashInfo.motorcyclists
             }
-            isChecked={filter.motorists}
+            isChecked={crashInfo.motorists}
             onChange={handleMotoristCheckbox}
           >
             Motorists
@@ -235,7 +244,7 @@ function Sidebar() {
           />
         </Box>
       </Stack>
-      {filter.dataset !== "OpenDataPhilly" && (
+      {crashInfo.dataset !== "OpenDataPhilly" && (
         <Stack spacing={3} p={5}>
           <Button
             backgroundColor="gray.500"

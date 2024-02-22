@@ -27,7 +27,7 @@ export interface Neigborhood {
   value: string;
 }
 
-export interface FilterState {
+export interface FilterCrashInfo {
   dataset: string;
   fromYear: string;
   toYear: string;
@@ -38,6 +38,19 @@ export interface FilterState {
   motorists: boolean;
   fatalities: boolean;
   majorInjuries: boolean;
+}
+
+export interface FilterDisplayableInfo {
+  stateRoads: boolean;
+  schoolsAndRec: boolean;
+  eligibleRoads: boolean;
+  trafficCalming: boolean;
+  points: boolean;
+}
+
+export interface FilterState {
+  crashInfo: FilterCrashInfo;
+  displayableInfo: FilterDisplayableInfo;
   yearOptions: string[];
   yearRange: number[];
 }

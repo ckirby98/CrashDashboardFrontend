@@ -1,16 +1,16 @@
-import { FilterState } from "../types";
+import { FilterCrashInfo } from "../types";
 
-export default function getOutputFilename(filter: FilterState) {
+export default function getOutputFilename(crashInfo: FilterCrashInfo) {
   const today = new Date().toISOString().substring(0, 10);
   const modes = [
-    ...(filter.pedestrians ? ["PE"] : []),
-    ...(filter.cyclists ? ["CY"] : []),
-    ...(filter.motorcyclists ? ["MC"] : []),
-    ...(filter.motorists ? ["MO"] : []),
+    ...(crashInfo.pedestrians ? ["PE"] : []),
+    ...(crashInfo.cyclists ? ["CY"] : []),
+    ...(crashInfo.motorcyclists ? ["MC"] : []),
+    ...(crashInfo.motorists ? ["MO"] : []),
   ];
   const severities = [
-    ...(filter.fatalities ? ["FAT"] : []),
-    ...(filter.majorInjuries ? ["INJ"] : []),
+    ...(crashInfo.fatalities ? ["FAT"] : []),
+    ...(crashInfo.majorInjuries ? ["INJ"] : []),
   ];
   return `crash_report_${today} ${severities.join("-")} ${modes.join("-")}`;
 }

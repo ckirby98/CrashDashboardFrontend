@@ -26,19 +26,28 @@ const pennDOTYearOptipons = [
 ];
 
 const initialState: FilterState = {
-  dataset: "PennDOT",
-  fromYear: pennDOTYearOptipons[0],
-  toYear: pennDOTYearOptipons[pennDOTYearOptipons.length - 1],
-  neighborhood: {
-    label: "",
-    value: "",
+  crashInfo: {
+    dataset: "PennDOT",
+    fromYear: pennDOTYearOptipons[0],
+    toYear: pennDOTYearOptipons[pennDOTYearOptipons.length - 1],
+    neighborhood: {
+      label: "",
+      value: "",
+    },
+    cyclists: true,
+    pedestrians: true,
+    motorcyclists: false,
+    motorists: false,
+    fatalities: true,
+    majorInjuries: true,
   },
-  cyclists: true,
-  pedestrians: true,
-  motorcyclists: false,
-  motorists: false,
-  fatalities: true,
-  majorInjuries: true,
+  displayableInfo: {
+    stateRoads: false,
+    schoolsAndRec: false,
+    eligibleRoads: false,
+    trafficCalming: false,
+    points: true,
+  },
   yearOptions: pennDOTYearOptipons,
   yearRange: [],
 };
@@ -48,37 +57,52 @@ export const fitlerSlice = createSlice({
   initialState,
   reducers: {
     setDateset: (state, action: PayloadAction<string>) => {
-      state.dataset = action.payload;
+      state.crashInfo.dataset = action.payload;
     },
     setFromYear: (state, action: PayloadAction<string>) => {
-      state.fromYear = action.payload;
+      state.crashInfo.fromYear = action.payload;
     },
     setToYear: (state, action: PayloadAction<string>) => {
-      state.toYear = action.payload;
+      state.crashInfo.toYear = action.payload;
     },
     setNeighborhood: (state, action: PayloadAction<Neigborhood>) => {
-      state.neighborhood = action.payload;
+      state.crashInfo.neighborhood = action.payload;
     },
     setYearOptions: (state, action: PayloadAction<string[]>) => {
       state.yearOptions = action.payload;
     },
     setCyclists: (state, action: PayloadAction<boolean>) => {
-      state.cyclists = action.payload;
+      state.crashInfo.cyclists = action.payload;
     },
     setPedestrians: (state, action: PayloadAction<boolean>) => {
-      state.pedestrians = action.payload;
+      state.crashInfo.pedestrians = action.payload;
     },
     setMotorcyclists: (state, action: PayloadAction<boolean>) => {
-      state.motorcyclists = action.payload;
+      state.crashInfo.motorcyclists = action.payload;
     },
     setMotorists: (state, action: PayloadAction<boolean>) => {
-      state.motorists = action.payload;
+      state.crashInfo.motorists = action.payload;
     },
     setFatalities: (state, action: PayloadAction<boolean>) => {
-      state.fatalities = action.payload;
+      state.crashInfo.fatalities = action.payload;
     },
     setMajorInjuries: (state, action: PayloadAction<boolean>) => {
-      state.majorInjuries = action.payload;
+      state.crashInfo.majorInjuries = action.payload;
+    },
+    setStateRoads: (state, action: PayloadAction<boolean>) => {
+      state.displayableInfo.stateRoads = action.payload;
+    },
+    setSchoolsAndRec: (state, action: PayloadAction<boolean>) => {
+      state.displayableInfo.schoolsAndRec = action.payload;
+    },
+    setEligibleRoads: (state, action: PayloadAction<boolean>) => {
+      state.displayableInfo.eligibleRoads = action.payload;
+    },
+    setTrafficCalming: (state, action: PayloadAction<boolean>) => {
+      state.displayableInfo.trafficCalming = action.payload;
+    },
+    setPoints: (state, action: PayloadAction<boolean>) => {
+      state.displayableInfo.points = action.payload;
     },
   },
 });
@@ -96,6 +120,11 @@ export const {
   setMotorists,
   setFatalities,
   setMajorInjuries,
+  setStateRoads,
+  setSchoolsAndRec,
+  setEligibleRoads,
+  setTrafficCalming,
+  setPoints,
 } = fitlerSlice.actions;
 
 export default fitlerSlice.reducer;
