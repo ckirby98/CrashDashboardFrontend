@@ -16,7 +16,7 @@ import ProgressBar from "../DataVisualization/ProgressBar/ProgressBar";
 import MapTopOverlay from "./MapTopOverlay";
 
 esriConfig.apiKey =
-  "AAPK03acd7bd14cc4cca80c38b0f14ac1c70NYgi-zHokSt0u6Aj2xISCHucc66tY8n8V-Iu4JcgG0FMGn3q2NRCedFh3x9UPGyB";
+  "";
 
 function Dashboard() {
   const dispatch = useAppDispatch();
